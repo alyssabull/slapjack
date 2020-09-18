@@ -92,9 +92,15 @@ class Game {
     }
 
     playGame() {
-      this.centralPile.push(player1.playCard());
-      player1.hand.shift()
-      console.log(player1.hand);
+      if (player1.hand.length % 2 === 0) {
+        this.centralPile.push(player1.playCard());
+        player1.hand.shift()
+        console.log(this.centralPile);
+      } else {
+        this.centralPile.push(player2.playCard());
+        player2.hand.shift()
+        console.log(this.centralPile);
+      }
     }
 
   }
