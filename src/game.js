@@ -58,6 +58,7 @@ class Game {
       {value: 13, src: './assets/red-king.png'},
     ];
     this.centralPile = [];
+    this.playerTurn = 0;
   }
 
   shuffleDeck() {
@@ -91,20 +92,28 @@ class Game {
       player2.hand = player2Hand;
     }
 
-    playGame1() {
+    playGame() {
+      if (this.playerTurn === 0) {
         this.centralPile.push(player1.playCard());
         player1.hand.shift()
+        this.playerTurn = 1;
         console.log(this.centralPile);
-    }
-
-    playGame2() {
-      this.centralPile.push(player2.playCard());
-      player2.hand.shift()
-      console.log(this.centralPile);
+      } else if (this.playerTurn === 1) {
+        this.centralPile.push(player2.playCard());
+        player2.hand.shift()
+        this.playerTurn = 0;
+        console.log(this.centralPile);
+      }
     }
 
     slapThePile() {
-
+      if (this.centralPile[0].value === this.centralPile[1].value){
+        console.log('DOUBLE BABY!');
+      } else if (this.centralPile[0].value === this.centralPile[2].value) {
+        console.log('SANDWICH BABY!');
+      } else if (this.centralPile[0].value === 11) {
+        console.log('SLAPJACK BABY!');
+      }
     }
 
   }
