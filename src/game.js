@@ -60,6 +60,25 @@ class Game {
   }
 
   shuffleDeck() {
-    console.log(this.cards);
+    var currentIndex = this.cards.length;
+    var temporaryValue;
+    var randomIndex;
+
+    //while there are remaining elements in the array
+    while(currentIndex !== 0) {
+      //Pick one of the remaining elements using a random number
+      //Multiply it by the length of the array
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      //subtract one from the length of the array
+      currentIndex -= 1;
+
+      //swap the random index with the current element
+      //the temporary value will be assigned to the cards array at the current index
+      temporaryValue = this.cards[currentIndex];
+      //take the cards array at the current index and assign to the the cards array at the random index, the random index is now the random number generated above
+      this.cards[currentIndex] = this.cards[randomIndex];
+      this.cards[randomIndex] = temporaryValue;
+      }
+      return this.cards;
+    }
   }
-}
