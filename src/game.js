@@ -136,4 +136,14 @@ class Game {
       }
       this.centralPile = [];
     }
+
+    transferTopCard(playerID) {
+      if (player1.id === playerID) {
+        player2.hand.push(player1.hand[0]);
+        player1.hand.shift();
+      } else {
+        player1.hand.push(player2.hand)[0];
+        player1.hand.shift();
+      }
+    }
   }
