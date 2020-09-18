@@ -4,12 +4,4 @@ class Player {
     this.wins = 0;
     this.hand = [];
   }
-
-  playCard() {
-
-  }
-
-  saveWinstoStorage() {
-
-  }
 }
