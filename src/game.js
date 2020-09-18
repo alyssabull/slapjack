@@ -94,12 +94,12 @@ class Game {
 
     playGame() {
       if (this.playerTurn === 0) {
-        this.centralPile.push(player1.playCard());
+        this.centralPile.unshift(player1.playCard());
         player1.hand.shift()
         this.playerTurn = 1;
         console.log(this.centralPile);
       } else if (this.playerTurn === 1) {
-        this.centralPile.push(player2.playCard());
+        this.centralPile.unshift(player2.playCard());
         player2.hand.shift()
         this.playerTurn = 0;
         console.log(this.centralPile);
@@ -107,13 +107,14 @@ class Game {
     }
 
     slapThePile() {
-      if (this.centralPile[0].value === this.centralPile[1].value){
+      if (this.centralPile[0].value === 11){
+        console.log('SLAPJACK BABY!');
+      } else if (this.centralPile[0].value === this.centralPile[1].value) {
         console.log('DOUBLE BABY!');
       } else if (this.centralPile[0].value === this.centralPile[2].value) {
         console.log('SANDWICH BABY!');
-      } else if (this.centralPile[0].value === 11) {
-        console.log('SLAPJACK BABY!');
+      } else {
+        console.log('BAD SLAP!');
       }
     }
-
   }
