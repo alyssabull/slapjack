@@ -67,9 +67,9 @@ class Game {
     //while there are remaining elements in the array
     while(currentIndex !== 0) {
       //Pick one of the remaining elements using a random number
-      //Multiply it by the length of the array
+      //Multiply it by the length of the array (since Math.random gives a number between 0-1) and floor the number so there is no decimal
       randomIndex = Math.floor(Math.random() * currentIndex);
-      //subtract one from the length of the array
+      //subtract one from the length of the array so the next time the loop is ran it will decrease by one
       currentIndex -= 1;
 
       //swap the random index with the current element
@@ -80,5 +80,13 @@ class Game {
       this.cards[randomIndex] = temporaryValue;
       }
       return this.cards;
+    }
+
+    beginGame() {
+      //deal the shuffledDeck to each instance of the player class (26 cards each)
+      var player1Hand = this.cards.slice(0,26);
+      var player2Hand = this.cards.slice(26,52);
+      player1.hand = player1Hand;
+      player2.hand = player2Hand;
     }
   }
