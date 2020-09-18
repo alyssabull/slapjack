@@ -1,5 +1,5 @@
-var player1 = Player;
-var player2 = Player;
+var player1 = new Player;
+var player2 = new Player;
 
 class Game {
   constructor() {
@@ -57,6 +57,7 @@ class Game {
       {value: 12, src: './assets/red-queen.png'},
       {value: 13, src: './assets/red-king.png'},
     ];
+    this.centralPile = [];
   }
 
   shuffleDeck() {
@@ -89,4 +90,11 @@ class Game {
       player1.hand = player1Hand;
       player2.hand = player2Hand;
     }
+
+    playGame() {
+      this.centralPile.push(player1.playCard());
+      player1.hand.shift()
+      console.log(player1.hand);
+    }
+
   }
