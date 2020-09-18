@@ -91,16 +91,20 @@ class Game {
       player2.hand = player2Hand;
     }
 
-    playGame() {
-      if (player1.hand.length % 2 === 0) {
+    playGame1() {
         this.centralPile.push(player1.playCard());
         player1.hand.shift()
         console.log(this.centralPile);
-      } else {
-        this.centralPile.push(player2.playCard());
-        player2.hand.shift()
-        console.log(this.centralPile);
-      }
+    }
+
+    playGame2() {
+      this.centralPile.push(player2.playCard());
+      player2.hand.shift()
+      console.log(this.centralPile);
+    }
+
+    slapThePile() {
+
     }
 
   }
