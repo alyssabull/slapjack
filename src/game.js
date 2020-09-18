@@ -59,6 +59,7 @@ class Game {
     ];
     this.centralPile = [];
     this.playerTurn = 0;
+    this.transferID = 1;
   }
 
   shuffleDeck() {
@@ -106,15 +107,33 @@ class Game {
       }
     }
 
-    slapThePile() {
+    slapThePile(playerID) {
       if (this.centralPile[0].value === 11){
+        this.clearPile(playerID);
         console.log('SLAPJACK BABY!');
-      } else if (this.centralPile[0].value === this.centralPile[1].value) {
+      } else if (this.centralPile.length > 1 && this.centralPile[0].value === this.centralPile[1].value) {
+        this.clearPile(playerID);
         console.log('DOUBLE BABY!');
-      } else if (this.centralPile[0].value === this.centralPile[2].value) {
+      } else if (this.centralPile.length > 2 && this.centralPile[0].value === this.centralPile[2].value) {
+        this.clearPile(playerID);
         console.log('SANDWICH BABY!');
       } else {
+        this.transferTopCard(playerID);
+        this.transferID = 2;
         console.log('BAD SLAP!');
       }
+    }
+
+    clearPile(playerID) {
+      if (player1.id === playerID) {
+        for (var i = 0; i < this.centralPile.length; i++) {
+          player1.hand.push(this.centralPile[i]);
+        }
+      } else {
+        for (var i = 0; i < this.centralPile.length; i++) {
+        player2.hand.push(this.centralPile[i]);
+        }
+      }
+      this.centralPile = [];
     }
   }
