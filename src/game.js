@@ -4,14 +4,14 @@ var player2 = new Player;
 class Game {
   constructor() {
     this.cards =[
-      {value: 1, src: './assets/blue-01.png'},
-      {value: 2, src: './assets/blue-02.png'},
-      {value: 3, src: './assets/blue-03.png'},
-      {value: 4, src: './assets/blue-04.png'},
-      {value: 5, src: './assets/blue-05.png'},
-      {value: 6, src: './assets/blue-06.png'},
-      {value: 7, src: './assets/blue-07.png'},
-      {value: 8, src: './assets/blue-08.png'},
+      // {value: 1, src: './assets/blue-01.png'},
+      // {value: 2, src: './assets/blue-02.png'},
+      // {value: 3, src: './assets/blue-03.png'},
+      // {value: 4, src: './assets/blue-04.png'},
+      // {value: 5, src: './assets/blue-05.png'},
+      // {value: 6, src: './assets/blue-06.png'},
+      // {value: 7, src: './assets/blue-07.png'},
+      // {value: 8, src: './assets/blue-08.png'},
       {value: 9, src: './assets/blue-09.png'},
       {value: 10, src: './assets/blue-10.png'},
       {value: 11, src: './assets/blue-jack.png'},
@@ -59,11 +59,11 @@ class Game {
     ];
     this.centralPile = [];
     this.playerTurn = 0;
-    this.transferID = 1;
+    this.jackCount = false;
   }
 
-  shuffleDeck() {
-    var currentIndex = this.cards.length;
+  shuffleDeck(deck) {
+    var currentIndex = deck;
     var temporaryValue;
     var randomIndex;
 
@@ -77,29 +77,28 @@ class Game {
 
       //swap the random index with the current element
       //the temporary value will be assigned to the cards array at the current index
-      temporaryValue = this.cards[currentIndex];
+      temporaryValue = deck[currentIndex];
       //take the cards array at the current index and assign to the the cards array at the random index, the random index is now the random number generated above
-      this.cards[currentIndex] = this.cards[randomIndex];
-      this.cards[randomIndex] = temporaryValue;
+      deck[currentIndex] = deck[randomIndex];
+      deck[randomIndex] = temporaryValue;
       }
-      return this.cards;
+      return deck;
     }
 
     beginGame() {
-      //deal the shuffledDeck to each instance of the player class (26 cards each)
-      var player1Hand = this.cards.slice(0,6);
-      var player2Hand = this.cards.slice(6,12);
+      var player1Hand = this.cards.slice(0,2);
+      var player2Hand = this.cards.slice(2,4);
       player1.hand = player1Hand;
       player2.hand = player2Hand;
     }
 
     playGame() {
-      if (this.playerTurn === 0 && player1.hand.length > 0) {
+      if (this.playerTurn === 0 && player2.hand.length > 0) {
         this.centralPile.unshift(player1.playCard());
         player1.hand.shift()
         this.playerTurn = 1;
         console.log(this.centralPile);
-      } else if (this.playerTurn === 1 && player2.hand.length > 0) {
+      } else if (this.playerTurn === 1 && player1.hand.length > 0) {
         this.centralPile.unshift(player2.playCard());
         player2.hand.shift()
         this.playerTurn = 0;
@@ -149,14 +148,44 @@ class Game {
     }
 
     outOfCards() {
-      if (player1.hand.length === 0 && this.centralPile.length < 12) {
+      if (player1.hand.length === 0 && this.centralPile.length < 4) {
+        this.cardValues();
         this.centralPile.unshift(player2.playCard());
         player2.hand.shift()
-      } else if (player2.hand.length === 0 && this.centralPile.length < 12) {
+      } else if (player2.hand.length === 0 && this.centralPile.length < 4) {
+        this.cardValues();
         this.centralPile.unshift(player1.playCard());
         player1.hand.shift()
       } else {
-        console.log('No more cards in player hands');
+        this.finalSlap();
+      }
+    }
+
+    cardValues() {
+      if (player1.hand.length === 0) {
+        for (var i = 0; i < player2.hand.length; i++) {
+          if (player2.hand[i].value === 11) {
+            this.jackCount = true;
+            this.playerTurn = 1;
+      } else if (player2.hand.length === 0) {
+        for (var i = 0; i < player1.hand.length; i++) {
+          if (player1.hand[i].value === 11) {
+            this.jackCount = true;
+            this.playerTurn = 0;
+          }
+        }
+      }
+      }
+      }
+    }
+
+    finalSlap() {
+      if (this.jackCount) {
+        console.log('the game is over!')
+      } else {
+        this.shuffleDeck(this.centralPile);
+        this.
+        console.log('pick up the central pile and go through it one more time!')
       }
     }
   }

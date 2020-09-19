@@ -1,6 +1,6 @@
 class Player {
   constructor(id, wins, hand) {
-    this.id = Date.now();
+    this.id = Math.random();
     this.wins = 0;
     this.hand = [];
   }
