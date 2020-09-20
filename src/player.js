@@ -11,6 +11,10 @@ class Player {
   }
 
   saveWinsToStorage() {
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 784f4171328592608ee74986eedca3398ac2f3d6
   }
 }
