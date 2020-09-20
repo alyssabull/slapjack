@@ -39,9 +39,9 @@ class Game {
       {value: 8, src: './assets/green-08.png'},
       {value: 9, src: './assets/green-09.png'},
       {value: 10, src: './assets/green-10.png'},
-      {value: 11, src: './assets/green-11.png'},
-      {value: 12, src: './assets/green-12.png'},
-      {value: 13, src: './assets/green-13.png'},
+      {value: 11, src: './assets/green-jack.png'},
+      {value: 12, src: './assets/green-queen.png'},
+      {value: 13, src: './assets/green-king.png'},
       {value: 1, src: './assets/red-01.png'},
       {value: 2, src: './assets/red-02.png'},
       {value: 3, src: './assets/red-03.png'},
@@ -163,7 +163,7 @@ class Game {
     }
 
     onePlayerDeal(playerID) {
-      if (this.player2 === playerID && this.player2.hand.length > 0 && this.centralPile.length < 52) {
+      if (this.player2 === playerID && this.player1.hand.length > 0 && this.centralPile.length < 52) {
         this.cardValues();
         this.centralPile.unshift(this.player2.playCard());
         this.player2.hand.shift()
@@ -203,18 +203,30 @@ class Game {
     cardInventory(playerID) {
       if (this.jackCount) {
         console.log(`The game is over! ${playerID} won!`);
-      } else {
+      } else if (!this.jackCount) {
         for (var i = 0; i < this.centralPile.length; i++) {
           playerID.hand.push(this.centralPile[i]);
           this.shuffleDeck(playerID.hand);
         }
         this.centralPile = [];
         this.lastPlayer = playerID.id;
+        this.finalRound(playerID);
         console.log('pick up the central pile and go through it one more time!');
       }
     }
 
-  //   playFinalRound(playerID) {
-  //
-  //   }
+    finalRound(playerID) {
+      if (this.player1 === playerID) {
+        this.centralPile.unshift(this.player1.playCard());
+        this.player1.hand.shift()
+        console.log(`player 1 played ${this.centralPile[0].value}`);
+        console.log(this.player1.hand.length);
+    } else if (this.player2 === playerID) {
+        this.cardValues();
+        this.centralPile.unshift(this.player2.playCard());
+        this.player2.hand.shift()
+        console.log(`player 2 played ${this.centralPile[0].value}`);
+        console.log(this.player2.hand.length);
+    }
   }
+}
