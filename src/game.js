@@ -101,8 +101,7 @@ class Game {
 
     slapThePile(playerID) {
       if (this.centralPile[0].value === 11 && this.centralPile.length > 0){
-        this.clearPile(playerID);
-        console.log('SLAPJACK BABY!');
+        this.slapJack(playerID);
       } else if (this.centralPile.length > 1 && this.centralPile[0].value === this.centralPile[1].value && this.lastPlayer === 0) {
         this.clearPile(playerID);
         console.log('DOUBLE BABY!');
@@ -111,6 +110,19 @@ class Game {
         console.log('SANDWICH BABY!');
       } else {
         this.differentiateSlap(playerID);
+      }
+    }
+
+    slapJack(playerID) {
+      if (this.lastPlayer === 0) {
+        this.clearPile(playerID);
+        console.log('SLAPJACK BABY!');
+      } else if (this.lastPlayer === playerID) {
+        console.log('GAME OVER!');
+      } else if (this.lastPlayer !== playerID) {
+        this.clearPile(playerID);
+        this.lastPlayer = 0;
+        console.log('Player is back in the game!');
       }
     }
 
