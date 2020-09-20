@@ -78,24 +78,24 @@ class Game {
       this.player2.hand = player2Hand;
     }
 
-    playGame(player) {
-      if (this.player1.id === player && this.player2.isTurn === false && this.player2.hand.length > 0 && this.lastPlayer === 0) {
+    playGame(playerID) {
+      if (this.player1 === playerID && this.player2.isTurn === false && this.player2.hand.length > 0 && this.lastPlayer === 0) {
         this.centralPile.unshift(this.player1.playCard());
         this.player1.hand.shift();
         this.player1.isTurn = false;
         this.player2.isTurn = true;
-        console.log(`player 1 played ${this.centralPile[0].value}`);
-        console.log(this.player1.hand.length);
+          console.log(`player 1 played ${this.centralPile[0].value}`);
+          console.log(this.player1.hand.length);
       }
-      else if (this.player2.id === player && this.player1.isTurn === false && this.player1.hand.length > 0 && this.lastPlayer === 0) {
+      else if (this.player2 === playerID && this.player1.isTurn === false && this.player1.hand.length > 0 && this.lastPlayer === 0) {
         this.centralPile.unshift(this.player2.playCard());
         this.player2.hand.shift();
         this.player2.isTurn = false;
         this.player1.isTurn = true;
-        console.log(`player 2 played ${this.centralPile[0].value}`);
-        console.log(this.player2.hand.length);
+          console.log(`player 2 played ${this.centralPile[0].value}`);
+          console.log(this.player2.hand.length);
       } else if (this.player1.hand.length === 0 || this.player2.hand.length === 0) {
-        this.onePlayerDeal();
+        this.onePlayerDeal(playerID);
       }
     }
 
@@ -118,7 +118,7 @@ class Game {
         this.clearPile(playerID);
         console.log('SLAPJACK BABY!');
       } else if (this.lastPlayer === playerID) {
-        console.log('GAME OVER!');
+        console.log(`GAME OVER! ${this.lastPlayer} wins`);
       } else if (this.lastPlayer !== playerID) {
         this.clearPile(playerID);
         this.lastPlayer = 0;
@@ -130,13 +130,15 @@ class Game {
       if (this.lastPlayer === 0) {
         this.transferTopCard(playerID);
         console.log('BAD SLAP!');
-      } else if (this.lastPlayer > 0) {
-        console.log(`game over! the winner is player ${this.lastPlayer}`)
+      } else if (this.lastPlayer === playerID) {
+        console.log(`game over! ${this.lastPlayer} loses!`)
+      } else if (this.lastPlayer !== playerID) {
+        console.log(`game over! ${this.lastPlayer} wins!`)
       }
     }
 
     clearPile(playerID) {
-      if (this.player1.id === playerID) {
+      if (this.player1 === playerID) {
         for (var i = 0; i < this.centralPile.length; i++) {
           this.player1.hand.push(this.centralPile[i]);
           this.shuffleDeck(this.player1.hand);
@@ -151,32 +153,30 @@ class Game {
     }
 
     transferTopCard(playerID) {
-      if (this.player1.id === playerID) {
+      if (this.player1 === playerID) {
         this.player2.hand.push(this.player1.hand[0]);
         this.player1.hand.shift();
-      } else if (this.player2.id === playerID) {
+      } else if (this.player2 === playerID) {
         this.player1.hand.push(this.player2.hand[0]);
         this.player2.hand.shift();
       }
     }
 
-    onePlayerDeal() {
-      if (this.player1.hand.length === 0 && this.centralPile.length < 52) {
-        this.lastPlayer = 2;
+    onePlayerDeal(playerID) {
+      if (this.player2 === playerID && this.player2.hand.length > 0 && this.centralPile.length < 52) {
         this.cardValues();
         this.centralPile.unshift(this.player2.playCard());
         this.player2.hand.shift()
         console.log(`player 2 played ${this.centralPile[0].value}`);
         console.log(this.player2.hand.length);
-      } else if (this.player2.hand.length === 0 && this.centralPile.length < 52) {
-        this.lastPlayer = 1;
+      } else if (this.player1 === playerID && this.player2.hand.length > 0 && this.centralPile.length < 52) {
         this.cardValues();
         this.centralPile.unshift(this.player1.playCard());
         this.player1.hand.shift()
         console.log(`player 1 played ${this.centralPile[0].value}`);
         console.log(this.player1.hand.length);
       } else {
-        this.cardInventory();
+        this.cardInventory(playerID);
       }
     }
 
@@ -186,7 +186,7 @@ class Game {
           if (this.player2.hand[i].value === 11) {
             this.jackCount = true;
             this.lastPlayer = 2;
-            console.log('there is a jack in player 2 hand!');
+            console.log('there is a jack in player 2s hand!');
           }
         }
       } else if (this.player2.hand.length === 0) {
@@ -194,34 +194,27 @@ class Game {
           if (this.player1.hand[i].value === 11) {
             this.jackCount = true;
             this.lastPlayer = 1;
-            console.log('there is a jack in player 1 hand!')
+            console.log('there is a jack in player 1s hand!');
           }
         }
       }
     }
 
-    cardInventory() {
+    cardInventory(playerID) {
       if (this.jackCount) {
-        console.log('the game is over!')
+        console.log(`The game is over! ${playerID} won!`);
       } else {
-        this.shuffleDeck(this.centralPile);
-        console.log('pick up the central pile and go through it one more time!')
+        for (var i = 0; i < this.centralPile.length; i++) {
+          playerID.hand.push(this.centralPile[i]);
+          this.shuffleDeck(playerID.hand);
+        }
+        this.centralPile = [];
+        this.lastPlayer = playerID.id;
+        console.log('pick up the central pile and go through it one more time!');
       }
     }
 
-    playFinalRound() {
-      if (this.player1.hand.length === 0 && this.centralPile.length < 52) {
-        this.centralPile.unshift(this.player2.playCard());
-        this.player2.hand.shift()
-        console.log(`player 2 played ${this.centralPile[0].value}`);
-        console.log(this.player2.hand.length);
-      } else if (this.player2.hand.length === 0 && this.centralPile.length < 52) {
-        this.centralPile.unshift(player1.playCard());
-        this.player1.hand.shift()
-        console.log(`player 1 played ${this.centralPile[0].value}`);
-        console.log(this.player1.hand.length);
-      } else {
-        console.log('the game is over! Log the win appropriately!');
-      }
-    }
+  //   playFinalRound(playerID) {
+  //
+  //   }
   }

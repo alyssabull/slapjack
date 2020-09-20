@@ -6,12 +6,12 @@ newGame.beginGame();
 
 window.addEventListener('keydown', function(event) {
   if (event.key === 'q') {
-    newGame.playGame(newGame.player1.id);
+    newGame.playGame(newGame.player1);
   } else if (event.key === 'p') {
-    newGame.playGame(newGame.player2.id);
+    newGame.playGame(newGame.player2);
   } else if (event.key === 'f') {
-    newGame.slapThePile(newGame.player1.id);
+    newGame.slapThePile(newGame.player1);
   } else if (event.key === 'j') {
-    newGame.slapThePile(newGame.player2.id);
+    newGame.slapThePile(newGame.player2);
   }
 });
