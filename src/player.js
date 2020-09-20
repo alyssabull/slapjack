@@ -1,8 +1,9 @@
 class Player {
-  constructor(id, wins, hand) {
-    this.id = Math.random();
+  constructor(id) {
+    this.id = id;
     this.wins = 0;
     this.hand = [];
+    this.isTurn = false;
   }
 
   playCard() {
