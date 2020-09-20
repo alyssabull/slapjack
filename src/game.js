@@ -57,7 +57,7 @@ class Game {
       {value: 13, src: './assets/red-king.png'},
     ];
     this.centralPile = [];
-    // this.playerTurn = false;
+    this.lastPlayer = 0;
     this.jackCount = false;
   }
 
@@ -79,21 +79,23 @@ class Game {
     }
 
     playGame(player) {
-      if (this.player1.id === player && this.player2.isTurn === false && this.player2.hand.length > 0) {
+      if (this.player1.id === player && this.player2.isTurn === false && this.player2.hand.length > 0 && this.lastPlayer === 0) {
         this.centralPile.unshift(this.player1.playCard());
         this.player1.hand.shift();
         this.player1.isTurn = false;
         this.player2.isTurn = true;
         console.log(`player 1 played ${this.centralPile[0].value}`);
+        console.log(this.player1.hand.length);
       }
-      else if (this.player2.id === player && this.player1.isTurn === false && this.player1.hand.length > 0) {
+      else if (this.player2.id === player && this.player1.isTurn === false && this.player1.hand.length > 0 && this.lastPlayer === 0) {
         this.centralPile.unshift(this.player2.playCard());
         this.player2.hand.shift();
         this.player2.isTurn = false;
         this.player1.isTurn = true;
         console.log(`player 2 played ${this.centralPile[0].value}`);
+        console.log(this.player2.hand.length);
       } else if (this.player1.hand.length === 0 || this.player2.hand.length === 0) {
-        this.outOfCards();
+        this.onePlayerDeal();
       }
     }
 
@@ -101,25 +103,25 @@ class Game {
       if (this.centralPile[0].value === 11 && this.centralPile.length > 0){
         this.clearPile(playerID);
         console.log('SLAPJACK BABY!');
-      } else if (this.centralPile.length > 1 && this.centralPile[0].value === this.centralPile[1].value) {
+      } else if (this.centralPile.length > 1 && this.centralPile[0].value === this.centralPile[1].value && this.lastPlayer === 0) {
         this.clearPile(playerID);
         console.log('DOUBLE BABY!');
-      } else if (this.centralPile.length > 2 && this.centralPile[0].value === this.centralPile[2].value) {
+      } else if (this.centralPile.length > 2 && this.centralPile[0].value === this.centralPile[2].value && this.lastPlayer === 0) {
         this.clearPile(playerID);
         console.log('SANDWICH BABY!');
       } else {
-        this.transferTopCard(playerID);
+        this.differentiateSlap(playerID);
       }
     }
 
-    // differentiateSlap(playerID) {
-    //   if (this.playerTurn < 2) {
-    //     this.transferTopCard(playerID);
-    //     console.log('BAD SLAP!');
-    //   } else if (this.playerTurn > 2) {
-    //     console.log('game over! determine the winner! use the playerID!')
-    //   }
-    // }
+    differentiateSlap(playerID) {
+      if (this.lastPlayer === 0) {
+        this.transferTopCard(playerID);
+        console.log('BAD SLAP!');
+      } else if (this.lastPlayer > 0) {
+        console.log(`game over! the winner is player ${this.lastPlayer}`)
+      }
+    }
 
     clearPile(playerID) {
       if (this.player1.id === playerID) {
@@ -146,15 +148,21 @@ class Game {
       }
     }
 
-    outOfCards() {
-      if (this.player1.hand.length === 0 && this.centralPile.length < 4) {
+    onePlayerDeal() {
+      if (this.player1.hand.length === 0 && this.centralPile.length < 52) {
+        this.lastPlayer = 2;
         this.cardValues();
         this.centralPile.unshift(this.player2.playCard());
         this.player2.hand.shift()
-      } else if (this.player2.hand.length === 0 && this.centralPile.length < 4) {
+        console.log(`player 2 played ${this.centralPile[0].value}`);
+        console.log(this.player2.hand.length);
+      } else if (this.player2.hand.length === 0 && this.centralPile.length < 52) {
+        this.lastPlayer = 1;
         this.cardValues();
         this.centralPile.unshift(this.player1.playCard());
         this.player1.hand.shift()
+        console.log(`player 1 played ${this.centralPile[0].value}`);
+        console.log(this.player1.hand.length);
       } else {
         this.cardInventory();
       }
@@ -165,14 +173,16 @@ class Game {
         for (var i = 0; i < this.player2.hand.length; i++) {
           if (this.player2.hand[i].value === 11) {
             this.jackCount = true;
-            this.playerTurn = 3;
-          } else if (this.player2.hand.length === 0) {
-            for (var i = 0; i < this.player1.hand.length; i++) {
-              if (this.player1.hand[i].value === 11) {
-                this.jackCount = true;
-                this.playerTurn = 2;
-              }
-            }
+            this.lastPlayer = 2;
+            console.log('there is a jack in player 2 hand!');
+          }
+        }
+      } else if (this.player2.hand.length === 0) {
+        for (var i = 0; i < this.player1.hand.length; i++) {
+          if (this.player1.hand[i].value === 11) {
+            this.jackCount = true;
+            this.lastPlayer = 1;
+            console.log('there is a jack in player 1 hand!')
           }
         }
       }
@@ -188,12 +198,16 @@ class Game {
     }
 
     playFinalRound() {
-      if (this.player1.hand.length === 0 && this.centralPile.length < 4) {
+      if (this.player1.hand.length === 0 && this.centralPile.length < 52) {
         this.centralPile.unshift(this.player2.playCard());
         this.player2.hand.shift()
-      } else if (this.player2.hand.length === 0 && this.centralPile.length < 4) {
+        console.log(`player 2 played ${this.centralPile[0].value}`);
+        console.log(this.player2.hand.length);
+      } else if (this.player2.hand.length === 0 && this.centralPile.length < 52) {
         this.centralPile.unshift(player1.playCard());
         this.player1.hand.shift()
+        console.log(`player 1 played ${this.centralPile[0].value}`);
+        console.log(this.player1.hand.length);
       } else {
         console.log('the game is over! Log the win appropriately!');
       }
