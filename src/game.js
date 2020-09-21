@@ -80,7 +80,6 @@ class Game {
 
     playGame(playerID) {
       if (this.centralPile.length === 52 && this.lastPlayer === 0) {
-          return 'It\'s a draw, play again!';
           this.shuffleDeck(this.centralPile);
           this.beginGame();
           this.centralPile = [];
@@ -97,19 +96,21 @@ class Game {
         this.player1.isTurn = true;
       }
       else if (this.player1.hand.length === 0 || this.player2.hand.length === 0) {
+        console.log('activiate one player deal');
         this.onePlayerDeal(playerID);
+        return onePlayerMessage;
       }
     }
 
     slapThePile(playerID) {
       if (this.centralPile[0].value === 11 && this.centralPile.length > 0){
-        this.slapJack(playerID);
+        var message = this.slapJack(playerID);
+        return message;
       } else if (this.centralPile.length > 1 && this.centralPile[0].value === this.centralPile[1].value && this.lastPlayer === 0) {
         this.clearPile(playerID);
-        return `DOUBLE BABY! Player ${playerID.id} takes the pile!`;
+        return `DOUBLES!!!!!!!! Player ${playerID.id} takes the pile!`;
       } else if (this.centralPile.length > 2 && this.centralPile[0].value === this.centralPile[2].value && this.lastPlayer === 0) {
         this.clearPile(playerID);
-        return `SANDWICH BABY! Player ${playerID.id} takes the pile!`;
       } else {
         this.differentiateSlap(playerID);
       }
@@ -118,24 +119,18 @@ class Game {
     slapJack(playerID) {
       if (this.lastPlayer === 0) {
         this.clearPile(playerID);
-        `SLAPJACK BABY! ${playerID} takes the pile!`;
-      } else if (this.lastPlayer === playerID) {
-        return `GAME OVER! ${this.lastPlayer} wins!`;
+        return 'SLAPJACKKKKKK!!!!!!!!!!'
       } else if (this.lastPlayer !== playerID) {
         this.clearPile(playerID);
         this.lastPlayer = 0;
-        return `${playerID} is back in the game!`;
       }
     }
 
     differentiateSlap(playerID) {
       if (this.lastPlayer === 0) {
         this.transferTopCard(playerID);
-        return 'BAD SLAP!';
       } else if (this.lastPlayer === playerID) {
-        return `Game over! Player ${this.lastPlayer} loses!`;
       } else if (this.lastPlayer !== playerID) {
-        return `Game over! Player ${this.lastPlayer} wins!`;
       }
     }
 
@@ -166,16 +161,18 @@ class Game {
 
     onePlayerDeal(playerID) {
       if (this.player2 === playerID && this.player1.hand.length > 0 && this.centralPile.length < 52) {
+        this.player1.isTurn = false;
         this.cardValues();
         this.centralPile.unshift(this.player2.playCard());
         this.player2.hand.shift()
-        console.log(`player 2 played ${this.centralPile[0].value}`);
+        console.log(`OPD player 2 played ${this.centralPile[0].value}`);
         console.log(this.player2.hand.length);
       } else if (this.player1 === playerID && this.player2.hand.length > 0 && this.centralPile.length < 52) {
+        this.player2.isTurn = false;
         this.cardValues();
         this.centralPile.unshift(this.player1.playCard());
         this.player1.hand.shift()
-        console.log(`player 1 played ${this.centralPile[0].value}`);
+        console.log(`OPD player 1 played ${this.centralPile[0].value}`);
         console.log(this.player1.hand.length);
       } else {
         this.cardInventory(playerID);
@@ -213,7 +210,6 @@ class Game {
         this.centralPile = [];
         this.lastPlayer = playerID.id;
         this.finalRound(playerID);
-        console.log('pick up the central pile and go through it one more time!');
       }
     }
 
@@ -221,13 +217,13 @@ class Game {
       if (this.player1 === playerID) {
         this.centralPile.unshift(this.player1.playCard());
         this.player1.hand.shift()
-        console.log(`player 1 played ${this.centralPile[0].value}`);
+        console.log(`FINAL ROUND player 1 played ${this.centralPile[0].value}`);
         console.log(this.player1.hand.length);
     } else if (this.player2 === playerID) {
         this.cardValues();
         this.centralPile.unshift(this.player2.playCard());
         this.player2.hand.shift()
-        console.log(`player 2 played ${this.centralPile[0].value}`);
+        console.log(`FINAL ROUND player 2 played ${this.centralPile[0].value}`);
         console.log(this.player2.hand.length);
     }
   }
