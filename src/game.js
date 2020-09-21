@@ -140,6 +140,7 @@ class Game {
         this.player1.hand = [];
         this.player2.hand = [];
         this.beginGame();
+        this.winCount();
         return 'GAME OVER!!!!!!!'
       }
     }
@@ -154,6 +155,7 @@ class Game {
         this.player1.hand = [];
         this.player2.hand = [];
         this.beginGame();
+        this.winCount();
         return 'GAME OVER!!!!!!!'
       }
     }

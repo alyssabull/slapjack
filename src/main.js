@@ -3,9 +3,9 @@ var centralPile = document.querySelector('.central-pile');
 var displayMessage = document.querySelector('.display-message');
 var player1CardCount = document.querySelector('.player1-card-count');
 var player2CardCount = document.querySelector('.player2-card-count');
-
-newGame.shuffleDeck(newGame.cards);
-newGame.beginGame();
+var shuffleDeckButton = document.querySelector('.shuffle-deck-button');
+var beginGameButton = document.querySelector('.begin-game-button');
+var player1WinCount = document.querySelector('')
 
 window.addEventListener('keydown', function(event) {
   if (event.key === 'q') {
@@ -16,8 +16,25 @@ window.addEventListener('keydown', function(event) {
     playerSlaps(newGame.player1);
   } else if (event.key === 'j') {
     playerSlaps(newGame.player2);
+  } else if (event.key === ' ') {
+    displayWins(newGame.winCount());
   }
 });
+shuffleDeckButton.addEventListener('click', shuffleDeckMessage);
+beginGameButton.addEventListener('click', beginGameMessage);
+
+function shuffleDeckMessage() {
+  newGame.shuffleDeck(newGame.cards);
+  displayMessage.innerText = 'Deck has been shuffled!';
+  shuffleDeckButton.classList.add('hidden');
+  beginGameButton.classList.remove('hidden');
+}
+
+function beginGameMessage() {
+  newGame.beginGame();
+  displayMessage.innerText = 'Cards have been dealt. Player 1 begin!';
+  beginGameButton.classList.add('hidden');
+}
 
 function playerDeals(player) {
   clearInputs();
@@ -54,8 +71,11 @@ function updateCardCount(player) {
   }
 }
 
-
 function clearInputs() {
   displayMessage.innerText = '';
   centralPile.innerHTML = '';
+}
+
+function displayWins() {
+
 }
