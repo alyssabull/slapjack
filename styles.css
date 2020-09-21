@@ -14,10 +14,21 @@
   font-family: 'Monserrat', sans-serif;
 }
 
+.player-card-count {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 25px;
+  font-family: 'Monserrat', sans-serif;
+}
+
+.player1-card-count {
+  margin-right: 32%;
+}
+
 .card-decks {
   display: flex;
   justify-content: space-around;
-  margin-top: 50px;
+  margin-top: 20px;
 }
 
 .central-pile {

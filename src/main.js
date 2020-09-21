@@ -1,6 +1,8 @@
 var newGame = new Game;
 var centralPile = document.querySelector('.central-pile');
 var displayMessage = document.querySelector('.display-message');
+var player1CardCount = document.querySelector('.player1-card-count');
+var player2CardCount = document.querySelector('.player2-card-count');
 
 newGame.shuffleDeck(newGame.cards);
 newGame.beginGame();
@@ -19,6 +21,7 @@ window.addEventListener('keydown', function(event) {
 
 function player1Deals() {
   clearInputs();
+  updateCardCount(newGame.player1);
   newGame.playGame(newGame.player1);
   var player1Card =
   `<div><img src=${newGame.centralPile[0].src} class="player1-deck"><div>`
@@ -27,10 +30,21 @@ function player1Deals() {
 
 function player2Deals() {
   clearInputs();
+  updateCardCount(newGame.player2);
   newGame.playGame(newGame.player2);
   var player1Card =
   `<div><img src=${newGame.centralPile[0].src} class="player2-deck"><div>`
   centralPile.insertAdjacentHTML('afterbegin', player1Card);
+}
+
+function updateCardCount(player) {
+  if (newGame.player1 === player) {
+    var cardCount = newGame.player1.hand.length
+    player1CardCount.innerText = `${cardCount} cards`;
+  } else if (newGame. player2 === player) {
+    var cardCount = newGame.player2.hand.length
+    player2CardCount.innerText = `${cardCount} cards`;
+  }
 }
 
 function player1Slaps() {
