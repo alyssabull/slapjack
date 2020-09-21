@@ -99,6 +99,13 @@ class Game {
         return '';
       }
       else if (this.player1.hand.length === 0 || this.player2.hand.length === 0) {
+        if (this.player1.hand.length === 0) {
+          this.player1.isTurn = false;
+          this.player2.isTurn = true;
+        } else if (this.player2.hand.length === 0) {
+          this.player1.isTurn = true;
+          this.player2.isTurn = false;
+        }
         var onePlayerMessage = this.onePlayerDeal(player);
         return onePlayerMessage;
       }
@@ -123,18 +130,24 @@ class Game {
     slapJack(player) {
       if (this.lastPlayer === 0) {
         this.clearPile(player);
-        return `SLAPJACK!!!!!!!! Player ${player.id} takes the pile!`
+        return `SLAPJACK!!!!!!!! Player ${player.id} takes the pile!`;
       } else if (this.lastPlayer !== player) {
         this.clearPile(player);
         this.lastPlayer = 0;
+        return `Nice slap! Player ${player.id} is back in the game!`;
       }
     }
 
     differentiateSlap(player) {
       if (this.lastPlayer === 0) {
         this.transferTopCard(player);
-        return `DOUBLES!!!!!!!! Player ${player.id} gives their top card!`;
-      } else if (this.lastPlayer === player) {
+        return `BAD SLAP!!!!!!!! Player ${player.id} gives their top card!`;
+      } else if (this.lastPlayer > 0) {
+        this.lastPlayer = 0;
+        this.centralPile = [];
+        this.player1.hand = [];
+        this.player2.hand = [];
+        this.beginGame();
         return 'GAME OVER!!!!!!!'
       }
     }
@@ -165,21 +178,23 @@ class Game {
     }
 
     onePlayerDeal(player) {
-      if (this.player2 === player && this.centralPile.length < 52) {
-        this.player1.isTurn = false;
-        this.cardValues();
+      if (this.player2 === player && this.centralPile.length < 52 && this.lastPlayer !== 4) {
+        this.lastPlayer = 2;
+        // this.cardValues();
         this.centralPile.unshift(this.player2.playCard());
         this.player2.hand.shift()
         return 'Player 2 has all the cards! Player 1, last chance to slap a jack!';
-      } else if (this.player1 === player && this.centralPile.length < 52) {
-        this.player2.isTurn = false;
-        this.cardValues();
+      } else if (this.player1 === player && this.centralPile.length < 52 && this.lastPlayer !== 4) {
+        this.lastPlayer = 1;
+        // this.cardValues();
         this.centralPile.unshift(this.player1.playCard());
         this.player1.hand.shift()
         return 'Player 1 has all the cards! Player 2, last chance to slap a jack!';
-      } else {
-        this.cardInventory(player);
       }
+      // else {
+      //   var message = this.cardInventory(player);
+      //   return message;
+      // }
     }
 
     cardValues() {
@@ -188,7 +203,7 @@ class Game {
           if (this.player2.hand[i].value === 11) {
             this.jackCount = true;
             this.lastPlayer = 2;
-            console.log('there is a jack in player 2s hand!');
+            return 'There is a jack in player 2s hand! Player 1, slap it to get back in the game!';
           }
         }
       } else if (this.player2.hand.length === 0) {
@@ -196,7 +211,7 @@ class Game {
           if (this.player1.hand[i].value === 11) {
             this.jackCount = true;
             this.lastPlayer = 1;
-            console.log('there is a jack in player 1s hand!');
+            return 'There is a jack in player 1s hand! Player 2, slap it to get back in the game!';
           }
         }
       }
@@ -204,7 +219,7 @@ class Game {
 
     cardInventory(player) {
       if (this.jackCount) {
-        console.log(`The game is over! ${player} won!`);
+        return `The game is over! ${player} won!`;
       } else if (!this.jackCount) {
         for (var i = 0; i < this.centralPile.length; i++) {
           player.hand.push(this.centralPile[i]);
@@ -212,7 +227,8 @@ class Game {
         }
         this.centralPile = [];
         this.lastPlayer = player.id;
-        this.finalRound(player);
+        var finalMessage = this.finalRound(player);
+        return finalMessage;
       }
     }
 
@@ -220,14 +236,12 @@ class Game {
       if (this.player1 === player) {
         this.centralPile.unshift(this.player1.playCard());
         this.player1.hand.shift()
-        console.log(`FINAL ROUND player 1 played ${this.centralPile[0].value}`);
-        console.log(this.player1.hand.length);
+        return `FINAL ROUND player 1 played ${this.centralPile[0].value}`;
     } else if (this.player2 === player) {
         this.cardValues();
         this.centralPile.unshift(this.player2.playCard());
         this.player2.hand.shift()
-        console.log(`FINAL ROUND player 2 played ${this.centralPile[0].value}`);
-        console.log(this.player2.hand.length);
+        return `FINAL ROUND player 2 played ${this.centralPile[0].value}`;
     }
   }
 }

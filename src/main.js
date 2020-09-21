@@ -23,7 +23,9 @@ function playerDeals(player) {
   clearInputs();
   var gameMessage = newGame.playGame(player);
   updateCardCount(player);
-  displayMessage.innerText = gameMessage;
+  if (gameMessage !== undefined) {
+    displayMessage.innerText = gameMessage;
+  } 
   var playerCard =
   `<div><img src=${newGame.centralPile[0].src} class="player${player.id}-deck"><div>`
   centralPile.insertAdjacentHTML('afterbegin', playerCard);
@@ -34,7 +36,9 @@ function playerSlaps(player) {
   var slapMessage = newGame.slapThePile(player);
   updateCardCount(newGame.player1);
   updateCardCount(newGame.player2);
-  displayMessage.innerText = slapMessage;
+  if (slapMessage !== undefined) {
+    displayMessage.innerText = slapMessage;
+  }
 }
 
 function updateCardCount(player) {
