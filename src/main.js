@@ -1,6 +1,6 @@
 var newGame = new Game;
 var centralPile = document.querySelector('.central-pile');
-var displayMessage = document.querySelector('.display-message')
+var displayMessage = document.querySelector('.display-message');
 
 newGame.shuffleDeck(newGame.cards);
 newGame.beginGame();
@@ -18,7 +18,7 @@ window.addEventListener('keydown', function(event) {
 });
 
 function player1Deals() {
-  centralPile.innerHTML = '';
+  clearInputs();
   newGame.playGame(newGame.player1);
   var player1Card =
   `<div><img src=${newGame.centralPile[0].src} class="player1-deck"><div>`
@@ -26,7 +26,7 @@ function player1Deals() {
 }
 
 function player2Deals() {
-  centralPile.innerHTML = '';
+  clearInputs();
   newGame.playGame(newGame.player2);
   var player1Card =
   `<div><img src=${newGame.centralPile[0].src} class="player2-deck"><div>`
@@ -34,15 +34,16 @@ function player2Deals() {
 }
 
 function player1Slaps() {
-  displayMessage.innerText = '';
-  centralPile.innerHTML = ''
-  var currentCard = newGame.centralPile[0].value;
+  clearInputs();
+  var topCard = newGame.centralPile[0].value;
+  var secondCard = newGame.centralPile[1].value || null;
+  var thirdCard = newGame.centralPile[2].value || null;
   newGame.slapThePile(newGame.player1);
-  if (currentCard === 11) {
+  if (topCard === 11) {
     displayMessage.innerText = 'SLAPJACK! Player 1 takes the pile!';
-  } else if (currentCard === newGame.centralPile[1]) {
+  } else if (topCard === secondCard) {
     displayMessage.innerText = 'DOUBLES! Player 1 takes the pile!';
-  } else if (currentCard === newGame.centralPile[2]) {
+  } else if (topCard === thirdCard) {
     displayMessage.innerText = 'SANDWICH! Player 1 takes the pile!';
   } else {
     displayMessage.innerText = 'BAD SLAP! Player 2 takes your top card!';
@@ -50,17 +51,23 @@ function player1Slaps() {
 }
 
 function player2Slaps() {
-  displayMessage.innerText = '';
-  centralPile.innerHTML = ''
-  var currentCard = newGame.centralPile[0].value;
-  newGame.slapThePile(newGame.player2);
-  if (currentCard === 11) {
+  clearInputs();
+  var topCard = newGame.centralPile[0].value;
+  var secondCard = newGame.centralPile[1].value || null;
+  var thirdCard = newGame.centralPile[2].value || null;
+  newGame.slapThePile(newGame.player1);
+  if (topCard === 11) {
     displayMessage.innerText = 'SLAPJACK! Player 2 takes the pile!';
-  } else if (currentCard === newGame.centralPile[1]) {
+  } else if (topCard === secondCard) {
     displayMessage.innerText = 'DOUBLES! Player 2 takes the pile!';
-  } else if (currentCard === newGame.centralPile[2]) {
+  } else if (topCard === thirdCard) {
     displayMessage.innerText = 'SANDWICH! Player 2 takes the pile!';
   } else {
     displayMessage.innerText = 'BAD SLAP! Player 1 takes your top card!';
   }
+}
+
+function clearInputs() {
+  displayMessage.innerText = '';
+  centralPile.innerHTML = '';
 }
