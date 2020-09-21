@@ -25,10 +25,13 @@ function playerDeals(player) {
   updateCardCount(player);
   if (gameMessage !== undefined) {
     displayMessage.innerText = gameMessage;
-  } 
-  var playerCard =
-  `<div><img src=${newGame.centralPile[0].src} class="player${player.id}-deck"><div>`
-  centralPile.insertAdjacentHTML('afterbegin', playerCard);
+  }
+  if (newGame.centralPile[0] === undefined) {
+  } else {
+    var playerCard =
+    `<div><img src=${newGame.centralPile[0].src} class="player${player.id}-deck"><div>`
+    centralPile.insertAdjacentHTML('afterbegin', playerCard);
+  }
 }
 
 function playerSlaps(player) {
