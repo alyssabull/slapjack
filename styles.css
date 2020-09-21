@@ -1,3 +1,10 @@
+.title {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+  font-size: 30px;
+}
+
 .messages {
   display: flex;
   justify-content: center;
@@ -13,13 +20,23 @@
 .player-card-deck {
   height: 215px;
   width: 150px;
-  border: 2px solid;
+  border-radius: 8px;
 }
 
-.central-pile {
+.player1-deck {
   height: 215px;
   width: 150px;
   border: 2px solid;
+  border-radius: 8px;
+  box-shadow: 12px 12px 6px -6px green;
+}
+
+.player2-deck {
+  height: 215px;
+  width: 150px;
+  border: 2px solid;
+  border-radius: 8px;
+  box-shadow: 12px 12px 6px -6px cornflowerblue;
 }
 
 .player-wins {

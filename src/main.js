@@ -20,13 +20,13 @@ function player1Deals() {
   centralPile.innerHTML = "";
   newGame.playGame(newGame.player1);
   var player1Card =
-  `<div><img src=${newGame.centralPile[0].src} class="player-card-deck"><div>`
+  `<div><img src=${newGame.centralPile[0].src} class="player1-deck"><div>`
   centralPile.insertAdjacentHTML('afterbegin', player1Card);
 }
 function player2Deals() {
   centralPile.innerHTML = "";
   newGame.playGame(newGame.player2);
   var player1Card =
-  `<div><img src=${newGame.centralPile[0].src} class="player-card-deck"><div>`
+  `<div><img src=${newGame.centralPile[0].src} class="player2-deck"><div>`
   centralPile.insertAdjacentHTML('afterbegin', player1Card);
 }
