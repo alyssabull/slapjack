@@ -9,6 +9,7 @@
 .messages {
   display: flex;
   justify-content: center;
+  height: 25px;
   margin: 20px;
   font-size: 20px;
   font-family: 'Monserrat', sans-serif;

@@ -79,22 +79,24 @@ class Game {
     }
 
     playGame(playerID) {
-      if (this.player1 === playerID && this.player2.isTurn === false && this.player2.hand.length > 0 && this.lastPlayer === 0) {
+      if (this.centralPile.length === 52 && this.lastPlayer === 0) {
+          return 'It\'s a draw, play again!';
+          this.shuffleDeck(this.centralPile);
+          this.beginGame();
+          this.centralPile = [];
+      } else if (this.player1 === playerID && this.player2.isTurn === false && this.lastPlayer === 0) {
         this.centralPile.unshift(this.player1.playCard());
         this.player1.hand.shift();
         this.player1.isTurn = false;
         this.player2.isTurn = true;
-          console.log(`player 1 played ${this.centralPile[0].value}`);
-          console.log(this.player1.hand.length);
       }
-      else if (this.player2 === playerID && this.player1.isTurn === false && this.player1.hand.length > 0 && this.lastPlayer === 0) {
+      else if (this.player2 === playerID && this.player1.isTurn === false && this.lastPlayer === 0) {
         this.centralPile.unshift(this.player2.playCard());
         this.player2.hand.shift();
         this.player2.isTurn = false;
         this.player1.isTurn = true;
-          console.log(`player 2 played ${this.centralPile[0].value}`);
-          console.log(this.player2.hand.length);
-      } else if (this.player1.hand.length === 0 || this.player2.hand.length === 0) {
+      }
+      else if (this.player1.hand.length === 0 || this.player2.hand.length === 0) {
         this.onePlayerDeal(playerID);
       }
     }
@@ -104,10 +106,10 @@ class Game {
         this.slapJack(playerID);
       } else if (this.centralPile.length > 1 && this.centralPile[0].value === this.centralPile[1].value && this.lastPlayer === 0) {
         this.clearPile(playerID);
-        console.log('DOUBLE BABY!');
+        return `DOUBLE BABY! Player ${playerID.id} takes the pile!`;
       } else if (this.centralPile.length > 2 && this.centralPile[0].value === this.centralPile[2].value && this.lastPlayer === 0) {
         this.clearPile(playerID);
-        console.log('SANDWICH BABY!');
+        return `SANDWICH BABY! Player ${playerID.id} takes the pile!`;
       } else {
         this.differentiateSlap(playerID);
       }
@@ -116,24 +118,24 @@ class Game {
     slapJack(playerID) {
       if (this.lastPlayer === 0) {
         this.clearPile(playerID);
-        console.log('SLAPJACK BABY!');
+        `SLAPJACK BABY! ${playerID} takes the pile!`;
       } else if (this.lastPlayer === playerID) {
-        console.log(`GAME OVER! ${this.lastPlayer} wins`);
+        return `GAME OVER! ${this.lastPlayer} wins!`;
       } else if (this.lastPlayer !== playerID) {
         this.clearPile(playerID);
         this.lastPlayer = 0;
-        console.log('Player is back in the game!');
+        return `${playerID} is back in the game!`;
       }
     }
 
     differentiateSlap(playerID) {
       if (this.lastPlayer === 0) {
         this.transferTopCard(playerID);
-        console.log('BAD SLAP!');
+        return 'BAD SLAP!';
       } else if (this.lastPlayer === playerID) {
-        console.log(`game over! ${this.lastPlayer} loses!`)
+        return `Game over! Player ${this.lastPlayer} loses!`;
       } else if (this.lastPlayer !== playerID) {
-        console.log(`game over! ${this.lastPlayer} wins!`)
+        return `Game over! Player ${this.lastPlayer} wins!`;
       }
     }
 
