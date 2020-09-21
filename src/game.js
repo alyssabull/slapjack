@@ -140,8 +140,8 @@ class Game {
         this.player1.hand = [];
         this.player2.hand = [];
         this.beginGame();
-        this.winCount();
-        return 'GAME OVER!!!!!!!'
+        this.updateWins(player);
+        return 'GAME OVER!'
       }
     }
 
@@ -155,7 +155,13 @@ class Game {
         this.player1.hand = [];
         this.player2.hand = [];
         this.beginGame();
-        this.winCount();
+        if (player.id % 2 === 0) {
+          var playerWin = this.player1;
+          this.updateWins(playerWin)
+        } else {
+          var playerWin = this.player2;
+          this.updateWins(playerWin);
+        }
         return 'GAME OVER!!!!!!!'
       }
     }
@@ -201,11 +207,19 @@ class Game {
     }
 
     cardValues(player) {
-        for (var i = 0; i < player.hand.length; i++) {
-          if (player.hand[i].value === 11) {
+      if (this.player1 === player) {
+        for (var i = 0; i < this.player1.hand.length; i++) {
+          if (this.player1.hand[i].value === 11) {
             this.jackCount = true;
           }
         }
+      } else if (this.player2 === player) {
+        for (var i = 0; i < this.player2.hand.length; i++) {
+          if (this.player2.hand[i].value === 11) {
+            this.jackCount = true;
+          }
+        }
+      }
     }
 
     cardInventory(player) {
@@ -219,6 +233,14 @@ class Game {
         }
         this.centralPile = [];
         return 'No Jacks, the pile will be dealt again!'
+      }
+    }
+
+    updateWins(player) {
+      if (this.player1 === player) {
+        this.player1.wins++;
+      } else if (this.player2 === player) {
+        this.player2.wins++;
       }
     }
 

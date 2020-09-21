@@ -5,7 +5,8 @@ var player1CardCount = document.querySelector('.player1-card-count');
 var player2CardCount = document.querySelector('.player2-card-count');
 var shuffleDeckButton = document.querySelector('.shuffle-deck-button');
 var beginGameButton = document.querySelector('.begin-game-button');
-var player1WinCount = document.querySelector('')
+var player1WinCount = document.querySelector('.player1-win-count');
+var player2WinCount = document.querySelector('.player2-win-count');
 
 window.addEventListener('keydown', function(event) {
   if (event.key === 'q') {
@@ -37,6 +38,7 @@ function beginGameMessage() {
 }
 
 function playerDeals(player) {
+  displayWins();
   clearInputs();
   var gameMessage = newGame.playGame(player);
   updateCardCount(player);
@@ -77,5 +79,6 @@ function clearInputs() {
 }
 
 function displayWins() {
-
+  player1WinCount.innerText = `${newGame.player1.wins} wins!!!`;
+  player2WinCount.innerText = `${newGame.player2.wins} wins!!!!`;
 }
