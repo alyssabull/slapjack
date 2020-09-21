@@ -21,8 +21,8 @@ window.addEventListener('keydown', function(event) {
 
 function player1Deals() {
   clearInputs();
-  updateCardCount(newGame.player1);
   newGame.playGame(newGame.player1);
+  updateCardCount(newGame.player1);
   var player1Card =
   `<div><img src=${newGame.centralPile[0].src} class="player1-deck"><div>`
   centralPile.insertAdjacentHTML('afterbegin', player1Card);
@@ -30,8 +30,8 @@ function player1Deals() {
 
 function player2Deals() {
   clearInputs();
-  updateCardCount(newGame.player2);
   newGame.playGame(newGame.player2);
+  updateCardCount(newGame.player2);
   var player1Card =
   `<div><img src=${newGame.centralPile[0].src} class="player2-deck"><div>`
   centralPile.insertAdjacentHTML('afterbegin', player1Card);
@@ -50,8 +50,8 @@ function updateCardCount(player) {
 function player1Slaps() {
   clearInputs();
   var topCard = newGame.centralPile[0].value;
-  var secondCard = newGame.centralPile[1].value || null;
-  var thirdCard = newGame.centralPile[2].value || null;
+  var secondCard = newGame.centralPile[1].value;
+  var thirdCard = newGame.centralPile[2].value;
   newGame.slapThePile(newGame.player1);
   if (topCard === 11) {
     displayMessage.innerText = 'SLAPJACK! Player 1 takes the pile!';
@@ -67,8 +67,8 @@ function player1Slaps() {
 function player2Slaps() {
   clearInputs();
   var topCard = newGame.centralPile[0].value;
-  var secondCard = newGame.centralPile[1].value || null;
-  var thirdCard = newGame.centralPile[2].value || null;
+  var secondCard = newGame.centralPile[1].value || undefined;
+  var thirdCard = newGame.centralPile[2].value || undefined;
   newGame.slapThePile(newGame.player1);
   if (topCard === 11) {
     displayMessage.innerText = 'SLAPJACK! Player 2 takes the pile!';
