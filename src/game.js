@@ -108,18 +108,20 @@ class Game {
         return message;
       } else if (this.centralPile.length > 1 && this.centralPile[0].value === this.centralPile[1].value && this.lastPlayer === 0) {
         this.clearPile(playerID);
-        return `DOUBLES!!!!!!!! Player ${playerID.id} takes the pile!`;
+        return 'DOUBLES!!!!!!!!';
       } else if (this.centralPile.length > 2 && this.centralPile[0].value === this.centralPile[2].value && this.lastPlayer === 0) {
         this.clearPile(playerID);
+        return 'SANDWICH!!!!!!!!';
       } else {
-        this.differentiateSlap(playerID);
+        var message = this.differentiateSlap(playerID);
+        return message;
       }
     }
 
     slapJack(playerID) {
       if (this.lastPlayer === 0) {
         this.clearPile(playerID);
-        return 'SLAPJACKKKKKK!!!!!!!!!!'
+        return `SLAPJACKKKKKK!!!!!!!!!!`
       } else if (this.lastPlayer !== playerID) {
         this.clearPile(playerID);
         this.lastPlayer = 0;
@@ -129,8 +131,9 @@ class Game {
     differentiateSlap(playerID) {
       if (this.lastPlayer === 0) {
         this.transferTopCard(playerID);
+        return `BAD SLAP!!!!!!!`;
       } else if (this.lastPlayer === playerID) {
-      } else if (this.lastPlayer !== playerID) {
+        return 'GAME OVER!!!!!!!'
       }
     }
 
