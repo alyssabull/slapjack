@@ -89,7 +89,8 @@ class Game {
       } else if (this.isDealt === false) {
         return 'Deal the cards!';
       } else if (this.isShuffled === true && this.isDealt === true) {
-        this.dealToMiddle(player);
+        var playGameMessage = this.dealToMiddle(player);
+        return playGameMessage;
     }
   }
 
@@ -100,6 +101,7 @@ class Game {
       return 'It\'s a draw! Shuffle and deal again!';
     } else if (this.player1.hand.length === 0 || this.player2.hand.length === 0) {
       this.isFinals = true;
+      debugger
       var onePlayerMessage = this.playFinalRound(player);
       return onePlayerMessage;
     } else {
@@ -135,6 +137,7 @@ class Game {
       this.clearPile(player);
       return `SANDWICH! Player ${player.id} takes the pile!`;
     } else {
+      debugger
       var message = this.differentiateBadSlap(player);
       return message;
     }
@@ -167,21 +170,47 @@ class Game {
         this.transferTopCard(player);
         return `BAD SLAP! Player ${player.id} gives their top card!`;
       } else if (this.isFinals == true) {
-        this.resetGame();
-        this.determineSlapper(player);
+        debugger
+        var badSlapMessage = this.determineSlapper(player);
+        return badSlapMessage;
       }
     }
 
     determineSlapper(player) {
-      if (player.id % 2 === 0) {
-        var playerWin = this.player1;
-        this.updateWins(playerWin);
-        return 'GAME OVER! Player 1 wins!';
+      if (player.hand.length === 0) {
+        this.endGame(player);
       } else {
-        var playerWin = this.player2;
-        this.updateWins(playerWin);
-        return 'GAME OVER! Player 2 wins!';
+        this.isFinals = false;
+        this.backInTheGame(player);
+        return 'Bad slap! Opponent gets central pile!';
       }
+    }
+
+    endGame(player) {
+      if (player.id % 2 === 0) {
+          var playerWin = this.player1;
+          this.updateWins(playerWin)
+          return 'GAME OVER!!!!! Player 1 wins!'
+        } else {
+          var playerWin = this.player2;
+          this.updateWins(playerWin);
+          return 'GAME OVER!!!!! Player 2 wins!'
+        }
+      }
+
+    backInTheGame(player) {
+      if (this.player1 === player) {
+        for (var i = 0; i < this.centralPile.length; i++) {
+          this.player2.hand.push(this.centralPile[i]);
+          this.shuffleDeck(this.player2.hand);
+        }
+      } else if (this.player2 === player) {
+        for (var i = 0; i < this.centralPile.length; i++) {
+        this.player1.hand.push(this.centralPile[i]);
+        this.shuffleDeck(this.player1.hand);
+        }
+      }
+      this.centralPile = [];
     }
 
     clearPile(player) {
