@@ -170,7 +170,6 @@ class Game {
         this.transferTopCard(player);
         return `BAD SLAP! Player ${player.id} gives their top card!`;
       } else if (this.isFinals == true) {
-        debugger
         var badSlapMessage = this.determineSlapper(player);
         return badSlapMessage;
       }
@@ -273,6 +272,7 @@ class Game {
       if (this.jackCount) {
         this.centralPile = [];
         this.resetGame();
+        this.updateWins();
         return `The game is over! Player ${player.id} won!`;
       } else if (!this.jackCount) {
         for (var i = 0; i < this.centralPile.length; i++) {
