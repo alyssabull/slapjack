@@ -118,7 +118,7 @@ class Game {
   slapJack(player) {
     if (this.isFinals === false) {
       this.clearPile(player);
-      return `SLAPJACK!!!!!!!! Player ${player.id} takes the pile!`;
+      return `SLAPJACK! Player ${player.id} takes the pile!`;
     } else if (this.isFinals === true) {
       var finalMessage = this.finalSlap(player);
       return finalMessage;
@@ -141,7 +141,7 @@ class Game {
     if (this.isFinals === false) {
       this.transferTopCard(player);
       return `BAD SLAP! Player ${player.id} gives their top card!`;
-    } else if (this.isFinals == true) {
+    } else if (this.isFinals === true) {
       var badSlapMessage = this.determineSlapper(player);
       return badSlapMessage;
     }
@@ -149,7 +149,8 @@ class Game {
 
   determineSlapper(player) {
     if (player.hand.length === 0) {
-      this.endGame(player);
+      var endGameMessage = this.endGame(player);
+      return endGameMessage;
     } else {
       this.isFinals = false;
       this.backInTheGame(player);
@@ -161,11 +162,13 @@ class Game {
     if (player.id % 2 === 0) {
       var playerWin = this.player1;
       this.updateWins(playerWin)
-      return 'GAME OVER!!!!! Player 1 wins!'
+      this.resetGame();
+      return 'Bad Slap! GAME OVER! Player 1 wins!'
     } else {
       var playerWin = this.player2;
+      this.resetGame();
       this.updateWins(playerWin);
-      return 'GAME OVER!!!!! Player 2 wins!'
+      return 'Bad Slap! GAME OVER! Player 2 wins!'
     }
   }
 
