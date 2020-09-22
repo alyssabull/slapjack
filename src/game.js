@@ -169,11 +169,12 @@ class Game {
           debugger
           var playerWin = this.player1;
           this.updateWins(playerWin)
+          return 'GAME OVER!!!!! Player 1 wins!'
         } else {
           var playerWin = this.player2;
           this.updateWins(playerWin);
+          return 'GAME OVER!!!!! Player 2 wins!'
         }
-        return 'GAME OVER!!!!!!!'
       }
     }
 

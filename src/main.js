@@ -34,6 +34,7 @@ function shuffleDeckMessage() {
 
 function beginGameMessage() {
   newGame.beginGame();
+  displayWins();
   cardDecks.classList.remove('hidden');
   player1CardCount.innerText = '26 cards';
   player2CardCount.innerText = '26 cards';
@@ -59,7 +60,6 @@ function playerDeals(player) {
     }
     if (newGame.centralPile[0] === undefined) {
     } else {
-      displayWins();
       updateCardCount(player);
       var playerCard =
       `<div><img src=${newGame.centralPile[0].src} class="player${player.id}-deck"><div>`
