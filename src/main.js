@@ -26,7 +26,6 @@ shuffleDeckButton.addEventListener('click', shuffleDeckMessage);
 beginGameButton.addEventListener('click', beginGameMessage);
 
 function shuffleDeckMessage() {
-  debugger
   storedWins = [];
   newGame.shuffleDeck(newGame.cards);
   displayMessage.innerText = 'Deck has been shuffled!';

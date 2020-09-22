@@ -89,45 +89,53 @@ class Game {
       } else if (this.isDealt === false) {
         return 'Deal the cards!';
       } else if (this.isShuffled === true && this.isDealt === true) {
-          if (this.centralPile.length === 51 && this.isFinals === false && this.isSlapped === false) {
-              this.resetGame();
-              this.centralPile = [];
-              return 'It\'s a draw! Shuffle and deal again!';
-          } else if (this.player1.hand.length === 0 || this.player2.hand.length === 0) {
-            this.isFinals = true;
-            var onePlayerMessage = this.playFinalRound(player);
-            return onePlayerMessage;
-          } else if (this.player1 === player && this.player2.isTurn === false && this.isFinals === false) {
-            this.centralPile.unshift(this.player1.playCard());
-            this.player1.hand.shift();
-            this.player1.isTurn = false;
-            this.player2.isTurn = true;
-            return '';
-          } else if (this.player2 === player && this.player1.isTurn === false && this.isFinals === false) {
-            this.centralPile.unshift(this.player2.playCard());
-            this.player2.hand.shift();
-            this.player2.isTurn = false;
-            this.player1.isTurn = true;
-            return '';
-          }
-        }
+        debugger
+        this.dealToMiddle(player);
     }
+  }
+
+  dealToMiddle(player) {
+    if (this.centralPile.length === 51 && this.isFinals === false && this.isSlapped === false) {
+      this.resetGame();
+      this.centralPile = [];
+      return 'It\'s a draw! Shuffle and deal again!';
+    } else if (this.player1.hand.length === 0 || this.player2.hand.length === 0) {
+      this.isFinals = true;
+      var onePlayerMessage = this.playFinalRound(player);
+      return onePlayerMessage;
+    } else {
+      this.alternatePlayerTurns(player);
+    }
+  }
+
+  alternatePlayerTurns(player) {
+    if (this.player1 === player && this.player2.isTurn === false && this.isFinals === false) {
+      this.centralPile.unshift(this.player1.playCard());
+      this.player1.hand.shift();
+      this.player1.isTurn = false;
+      this.player2.isTurn = true;
+      return '';
+    } else if (this.player2 === player && this.player1.isTurn === false && this.isFinals === false) {
+      this.centralPile.unshift(this.player2.playCard());
+      this.player2.hand.shift();
+      this.player2.isTurn = false;
+      this.player1.isTurn = true;
+      return '';
+    }
+  }
 
     slapThePile(player) {
+      this.isSlapped = true;
       if (this.centralPile[0].value === 11 && this.centralPile.length > 0){
-        this.isSlapped = true;
         var message = this.slapJack(player);
         return message;
       } else if (this.centralPile.length > 1 && this.centralPile[0].value === this.centralPile[1].value && this.isFinals === false) {
-        this.isSlapped = true;
         this.clearPile(player);
         return `DOUBLES!!!!!!!! Player ${player.id} takes the pile!`;
       } else if (this.centralPile.length > 2 && this.centralPile[0].value === this.centralPile[2].value && this.isFinals === false) {
-        this.isSlapped = true;
         this.clearPile(player);
         return `SANDWICH!!!!!!!! Player ${player.id} takes the pile!`;
       } else {
-        this.isSlapped = true;
         var message = this.differentiateBadSlap(player);
         return message;
       }
