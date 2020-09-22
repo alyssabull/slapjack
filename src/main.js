@@ -9,6 +9,8 @@ var beginGameButton = document.querySelector('.begin-game-button');
 var player1WinCount = document.querySelector('.player1-win-count');
 var player2WinCount = document.querySelector('.player2-win-count');
 
+var storedWins = [];
+
 window.addEventListener('keydown', function(event) {
   if (event.key === 'q') {
     playerDeals(newGame.player1);
@@ -18,8 +20,6 @@ window.addEventListener('keydown', function(event) {
     playerSlaps(newGame.player1);
   } else if (event.key === 'j') {
     playerSlaps(newGame.player2);
-  } else if (event.key === ' ') {
-    displayWins(newGame.winCount());
   }
 });
 shuffleDeckButton.addEventListener('click', shuffleDeckMessage);
@@ -94,7 +94,17 @@ function clearInputs() {
 }
 
 function displayWins() {
-  
-  player1WinCount.innerText = `${newGame.player1.wins} wins`;
-  player2WinCount.innerText = `${newGame.player2.wins} wins`;
+  debugger
+  player1WinCount.classList.remove('hidden');
+  player2WinCount.classList.remove('hidden');
+  for (var i = 0; i < localStorage.length; i++) {
+    var storedWins = localStorage.getItem(localStorage.key(i));
+    var parsedWins = JSON.parse(storedWins);
+    var gameID = parsedWins.id;
+    var playerName = parsedWins.player;
+    var playerWins = parsedWins.wins;
+    var playerInfo = {playerName, playerWins};
+    storedWins.push(playerInfo);
+  }
+
 }

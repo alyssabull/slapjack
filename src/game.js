@@ -149,6 +149,7 @@ class Game {
         this.player1.hand = [];
         this.player2.hand = [];
         this.resetGame();
+        debugger
         this.updateWins(player);
         return 'GAME OVER!'
       }
@@ -165,6 +166,7 @@ class Game {
         this.player2.hand = [];
         this.resetGame();
         if (player.id % 2 === 0) {
+          debugger
           var playerWin = this.player1;
           this.updateWins(playerWin)
         } else {
@@ -234,6 +236,7 @@ class Game {
     cardInventory(player) {
       if (this.jackCount) {
         this.centralPile = [];
+        this.resetGame();
         return `The game is over! Player ${player.id} won!`;
       } else if (!this.jackCount) {
         for (var i = 0; i < this.centralPile.length; i++) {
@@ -246,15 +249,9 @@ class Game {
     }
 
     updateWins(player) {
-      if (this.player1 === player) {
-        this.player1.wins++;
-        this.player1.saveWinsToStorage();
-        this.resetGame();
-      } else if (this.player2 === player) {
-        this.player2.wins++;
-        this.player2.saveWinsToStorage();
-        this.resetGame();
-      }
+      debugger
+      player.wins++;
+      player.saveWinsToStorage();
     }
 
     resetGame() {
