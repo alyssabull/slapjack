@@ -1,4 +1,5 @@
 var newGame = new Game;
+var cardDecks = document.querySelector('.card-decks');
 var centralPile = document.querySelector('.central-pile');
 var displayMessage = document.querySelector('.display-message');
 var player1CardCount = document.querySelector('.player1-card-count');
@@ -33,23 +34,36 @@ function shuffleDeckMessage() {
 
 function beginGameMessage() {
   newGame.beginGame();
+  cardDecks.classList.remove('hidden');
+  player1CardCount.innerText = '26 cards';
+  player2CardCount.innerText = '26 cards';
   displayMessage.innerText = 'Cards have been dealt. Player 1 begin!';
   beginGameButton.classList.add('hidden');
 }
 
 function playerDeals(player) {
-  displayWins();
-  clearInputs();
-  var gameMessage = newGame.playGame(player);
-  updateCardCount(player);
-  if (gameMessage !== undefined) {
-    displayMessage.innerText = gameMessage;
-  }
-  if (newGame.centralPile[0] === undefined) {
+  if (newGame.isShuffled === false) {
+    clearInputs();
+    player1CardCount.innerText = '';
+    player2CardCount.innerText = '';
+    player1WinCount.innerText = '';
+    player2WinCount.innerText = '';
+    cardDecks.classList.add('hidden');
+    shuffleDeckButton.classList.remove('hidden');
   } else {
-    var playerCard =
-    `<div><img src=${newGame.centralPile[0].src} class="player${player.id}-deck"><div>`
-    centralPile.insertAdjacentHTML('afterbegin', playerCard);
+    clearInputs();
+    var gameMessage = newGame.playGame(player);
+    if (gameMessage !== undefined) {
+      displayMessage.innerText = gameMessage;
+    }
+    if (newGame.centralPile[0] === undefined) {
+    } else {
+      displayWins();
+      updateCardCount(player);
+      var playerCard =
+      `<div><img src=${newGame.centralPile[0].src} class="player${player.id}-deck"><div>`
+      centralPile.insertAdjacentHTML('afterbegin', playerCard);
+    }
   }
 }
 
@@ -79,6 +93,6 @@ function clearInputs() {
 }
 
 function displayWins() {
-  player1WinCount.innerText = `${newGame.player1.wins} wins!!!`;
-  player2WinCount.innerText = `${newGame.player2.wins} wins!!!!`;
+  player1WinCount.innerText = `${newGame.player1.wins} wins`;
+  player2WinCount.innerText = `${newGame.player2.wins} wins`;
 }

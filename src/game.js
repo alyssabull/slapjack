@@ -2,6 +2,8 @@ class Game {
   constructor() {
     this.player1 = new Player(1);
     this.player2 = new Player(2);
+    this.isShuffled = false;
+    this.isDealt = false;
     this.cards =[
       {value: 1, src: './assets/blue-01.png'},
       {value: 2, src: './assets/blue-02.png'},
@@ -68,6 +70,7 @@ class Game {
       deck[randomIndex] = deck[i];
       deck[i] = newIndex;
     }
+      this.isShuffled = true;
       return deck;
   }
 
@@ -76,31 +79,39 @@ class Game {
       var player2Hand = this.cards.slice(26,52);
       this.player1.hand = player1Hand;
       this.player2.hand = player2Hand;
+      this.isDealt = true;
     }
 
     playGame(player) {
-      if (this.centralPile.length === 52 && this.isFinals === false) {
-          this.shuffleDeck(this.centralPile);
-          this.beginGame();
-          this.centralPile = [];
-          return 'It\'s a draw! Shuffle and deal again!';
-      } else if (this.player1 === player && this.player2.isTurn === false && this.isFinals === false) {
-        this.centralPile.unshift(this.player1.playCard());
-        this.player1.hand.shift();
-        this.player1.isTurn = false;
-        this.player2.isTurn = true;
-        return '';
-      } else if (this.player2 === player && this.player1.isTurn === false && this.isFinals === false) {
-        this.centralPile.unshift(this.player2.playCard());
-        this.player2.hand.shift();
-        this.player2.isTurn = false;
-        this.player1.isTurn = true;
-        return '';
-      } else if (this.player1.hand.length === 0 || this.player2.hand.length === 0) {
-        this.isFinals = true;
-        var onePlayerMessage = this.playFinalRound(player);
-        return onePlayerMessage;
-      }
+      if (this.isShuffled === false ) {
+        return 'Shuffle the deck!'
+      } else if (this.isDealt === false) {
+        return 'Deal the cards!'
+      } else if (this.isShuffled === true && this.isDealt === true) {
+          if (this.centralPile.length === 52 && this.isFinals === false) {
+              // this.shuffleDeck(this.centralPile);
+              // this.beginGame();
+              this.resetGame();
+              this.centralPile = [];
+              return 'It\'s a draw! Shuffle and deal again!';
+          } else if (this.player1.hand.length === 0 || this.player2.hand.length === 0) {
+            this.isFinals = true;
+            var onePlayerMessage = this.playFinalRound(player);
+            return onePlayerMessage;
+          } else if (this.player1 === player && this.player2.isTurn === false && this.isFinals === false) {
+            this.centralPile.unshift(this.player1.playCard());
+            this.player1.hand.shift();
+            this.player1.isTurn = false;
+            this.player2.isTurn = true;
+            return '';
+          } else if (this.player2 === player && this.player1.isTurn === false && this.isFinals === false) {
+            this.centralPile.unshift(this.player2.playCard());
+            this.player2.hand.shift();
+            this.player2.isTurn = false;
+            this.player1.isTurn = true;
+            return '';
+          }
+        }
     }
 
     slapThePile(player) {
@@ -139,7 +150,8 @@ class Game {
         this.centralPile = [];
         this.player1.hand = [];
         this.player2.hand = [];
-        this.beginGame();
+        // this.beginGame();
+        this.resetGame();
         this.updateWins(player);
         return 'GAME OVER!'
       }
@@ -154,7 +166,8 @@ class Game {
         this.centralPile = [];
         this.player1.hand = [];
         this.player2.hand = [];
-        this.beginGame();
+        // this.beginGame();
+        this.resetGame();
         if (player.id % 2 === 0) {
           var playerWin = this.player1;
           this.updateWins(playerWin)
@@ -239,9 +252,16 @@ class Game {
     updateWins(player) {
       if (this.player1 === player) {
         this.player1.wins++;
+        this.resetGame();
       } else if (this.player2 === player) {
         this.player2.wins++;
+        this.resetGame();
       }
+    }
+
+    resetGame() {
+      this.isShuffled = false;
+      this.isDealt = false;
     }
 
 }

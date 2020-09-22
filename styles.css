@@ -80,15 +80,16 @@
 }
 
 .player-wins {
-  margin-left: 14.7%;
-  margin-right: 14.7%;
+  display: flex;
   margin-top: 20px;
+  justify-content: space-around;
   font-family: 'Monserrat', sans-serif;
 }
 
 .player1-win-count{
   display: flex;
   justify-content: space-between;
+  margin-right: 35%;
 }
 
 .hidden {
