@@ -75,15 +75,15 @@ class Game {
       return deck;
   }
 
-    beginGame() {
-      var player1Hand = this.cards.slice(0,26);
-      var player2Hand = this.cards.slice(26,52);
-      this.player1.hand = player1Hand;
-      this.player2.hand = player2Hand;
-      this.isDealt = true;
-    }
+  beginGame() {
+    var player1Hand = this.cards.slice(0,26);
+    var player2Hand = this.cards.slice(26,52);
+    this.player1.hand = player1Hand;
+    this.player2.hand = player2Hand;
+    this.isDealt = true;
+  }
 
-    playGame(player) {
+  playGame(player) {
       if (this.isShuffled === false ) {
         return 'Shuffle the deck!';
       } else if (this.isDealt === false) {
@@ -128,7 +128,7 @@ class Game {
         return `SANDWICH!!!!!!!! Player ${player.id} takes the pile!`;
       } else {
         this.isSlapped = true;
-        var message = this.differentiateSlap(player);
+        var message = this.differentiateBadSlap(player);
         return message;
       }
     }
@@ -160,7 +160,7 @@ class Game {
       }
     }
 
-    differentiateSlap(player) {
+    differentiateBadSlap(player) {
       if (this.isFinals === false) {
         this.transferTopCard(player);
         return `BAD SLAP!!!!!!!! Player ${player.id} gives their top card!`;
@@ -211,19 +211,19 @@ class Game {
     playFinalRound(player) {
       if (player.hand.length !== 0) {
         player.isFinalPlayer = true;
-        this.cardValues(player);
+        this.countJacks(player);
         this.centralPile.unshift(player.playCard());
         player.hand.shift()
         return `Player ${player.id} has all the cards! Last chance to slap a jack!`;
       } else if (player.isFinalPlayer === true) {
-        var jackCountMessage = this.cardInventory(player);
+        var jackCountMessage = this.onePlayerDeal(player);
         return jackCountMessage;
       } else {
         return `No cards left! Other player must deal to the center!`;
       }
     }
 
-    cardValues(player) {
+    countJacks(player) {
       if (this.player1 === player) {
         for (var i = 0; i < this.player1.hand.length; i++) {
           if (this.player1.hand[i].value === 11) {
@@ -239,7 +239,7 @@ class Game {
       }
     }
 
-    cardInventory(player) {
+    onePlayerDeal(player) {
       if (this.jackCount) {
         this.centralPile = [];
         this.resetGame();
@@ -264,5 +264,4 @@ class Game {
       this.isDealt = false;
       this.isSlapped = false;
     }
-
 }
