@@ -89,7 +89,6 @@ class Game {
       } else if (this.isDealt === false) {
         return 'Deal the cards!';
       } else if (this.isShuffled === true && this.isDealt === true) {
-        debugger
         this.dealToMiddle(player);
     }
   }
@@ -124,22 +123,22 @@ class Game {
     }
   }
 
-    slapThePile(player) {
-      this.isSlapped = true;
-      if (this.centralPile[0].value === 11 && this.centralPile.length > 0){
-        var message = this.slapJack(player);
-        return message;
-      } else if (this.centralPile.length > 1 && this.centralPile[0].value === this.centralPile[1].value && this.isFinals === false) {
-        this.clearPile(player);
-        return `DOUBLES!!!!!!!! Player ${player.id} takes the pile!`;
-      } else if (this.centralPile.length > 2 && this.centralPile[0].value === this.centralPile[2].value && this.isFinals === false) {
-        this.clearPile(player);
-        return `SANDWICH!!!!!!!! Player ${player.id} takes the pile!`;
-      } else {
-        var message = this.differentiateBadSlap(player);
-        return message;
-      }
+  slapThePile(player) {
+    this.isSlapped = true;
+    if (this.centralPile[0].value === 11 && this.centralPile.length > 0){
+      var message = this.slapJack(player);
+      return message;
+    } else if (this.centralPile.length > 1 && this.centralPile[0].value === this.centralPile[1].value && this.isFinals === false) {
+      this.clearPile(player);
+      return `DOUBLES! Player ${player.id} takes the pile!`;
+    } else if (this.centralPile.length > 2 && this.centralPile[0].value === this.centralPile[2].value && this.isFinals === false) {
+      this.clearPile(player);
+      return `SANDWICH! Player ${player.id} takes the pile!`;
+    } else {
+      var message = this.differentiateBadSlap(player);
+      return message;
     }
+  }
 
     slapJack(player) {
       if (this.isFinals === false) {
@@ -157,12 +156,7 @@ class Game {
         this.clearPile(player);
         return `Nice slap! Player ${player.id} is back in the game!`;
       } else {
-        this.isFinals = false;
-        this.centralPile = [];
-        this.player1.hand = [];
-        this.player2.hand = [];
         this.resetGame();
-        debugger
         this.updateWins(player);
         return 'GAME OVER!'
       }
@@ -173,21 +167,20 @@ class Game {
         this.transferTopCard(player);
         return `BAD SLAP!!!!!!!! Player ${player.id} gives their top card!`;
       } else if (this.isFinals == true) {
-        this.isFinals = false;
-        this.centralPile = [];
-        this.player1.hand = [];
-        this.player2.hand = [];
         this.resetGame();
-        if (player.id % 2 === 0) {
-          debugger
-          var playerWin = this.player1;
-          this.updateWins(playerWin)
-          return 'GAME OVER!!!!! Player 1 wins!'
-        } else {
-          var playerWin = this.player2;
-          this.updateWins(playerWin);
-          return 'GAME OVER!!!!! Player 2 wins!'
-        }
+        this.determineSlapper(player);
+      }
+    }
+
+    determineSlapper(player) {
+      if (player.id % 2 === 0) {
+        var playerWin = this.player1;
+        this.updateWins(playerWin)
+        return 'GAME OVER!!!!! Player 1 wins!'
+      } else {
+        var playerWin = this.player2;
+        this.updateWins(playerWin);
+        return 'GAME OVER!!!!! Player 2 wins!'
       }
     }
 
@@ -271,5 +264,9 @@ class Game {
       this.isShuffled = false;
       this.isDealt = false;
       this.isSlapped = false;
+      this.isFinals = false;
+      this.centralPile = [];
+      this.player1.hand = [];
+      this.player2.hand = [];
     }
 }
