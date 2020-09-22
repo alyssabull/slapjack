@@ -3,14 +3,6 @@
  background: linear-gradient(to right, #757f9a, #d7dde8);
 }
 
-.title {
-  display: flex;
-  justify-content: center;
-  margin: 20px;
-  font-size: 40px;
-  font-family: 'Monserrat', sans-serif;
-}
-
 .buttons {
   display: flex;
   justify-content: space-evenly;
@@ -27,6 +19,18 @@
   width: 100px;
   box-shadow: 3px 3px 2px -2px black;
   cursor: pointer;
+}
+
+.card-decks {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.central-pile {
+  border: black;
+  height: 215px;
+  width: 150px;
 }
 
 .messages {
@@ -48,18 +52,6 @@
 
 .player1-card-count {
   margin-right: 32%;
-}
-
-.card-decks {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
-}
-
-.central-pile {
-  border: black;
-  height: 215px;
-  width: 150px;
 }
 
 .player-card-deck {
@@ -95,6 +87,14 @@
   display: flex;
   justify-content: space-between;
   margin-right: 35%;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+  font-size: 40px;
+  font-family: 'Monserrat', sans-serif;
 }
 
 .hidden {

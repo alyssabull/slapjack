@@ -111,8 +111,8 @@ function displayWins() {
       totalPlayer2Wins += player2Wins;
     }
   }
-  player1WinCount.innerText = `${totalPlayer1Wins} wins`;
-  player2WinCount.innerText = `${totalPlayer2Wins} wins`;
+  player1WinCount.innerText = `Player 1: ${totalPlayer1Wins} wins`;
+  player2WinCount.innerText = `Player 2: ${totalPlayer2Wins} wins`;
 }
 
 function getWinsFromStorage() {

@@ -158,14 +158,14 @@ class Game {
       } else {
         this.resetGame();
         this.updateWins(player);
-        return 'GAME OVER!';
+        return `GAME OVER! Player ${player.id} wins!`;
       }
     }
 
     differentiateBadSlap(player) {
       if (this.isFinals === false) {
         this.transferTopCard(player);
-        return `BAD SLAP!!!!!!!! Player ${player.id} gives their top card!`;
+        return `BAD SLAP! Player ${player.id} gives their top card!`;
       } else if (this.isFinals == true) {
         this.resetGame();
         this.determineSlapper(player);
@@ -176,11 +176,11 @@ class Game {
       if (player.id % 2 === 0) {
         var playerWin = this.player1;
         this.updateWins(playerWin);
-        return 'GAME OVER!!!!! Player 1 wins!';
+        return 'GAME OVER! Player 1 wins!';
       } else {
         var playerWin = this.player2;
         this.updateWins(playerWin);
-        return 'GAME OVER!!!!! Player 2 wins!';
+        return 'GAME OVER! Player 2 wins!';
       }
     }
 
@@ -251,7 +251,7 @@ class Game {
           this.shuffleDeck(player.hand);
         }
         this.centralPile = [];
-        return 'No Jacks, the pile will be dealt again!';
+        return 'No Jacks were shown, the pile will be dealt again!';
       }
     }
 
