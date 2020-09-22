@@ -4,6 +4,7 @@ class Game {
     this.player2 = new Player(2);
     this.isShuffled = false;
     this.isDealt = false;
+    this.isSlapped = false;
     this.cards =[
       {value: 1, src: './assets/blue-01.png'},
       {value: 2, src: './assets/blue-02.png'},
@@ -88,7 +89,7 @@ class Game {
       } else if (this.isDealt === false) {
         return 'Deal the cards!';
       } else if (this.isShuffled === true && this.isDealt === true) {
-          if (this.centralPile.length === 52 && this.isFinals === false) {
+          if (this.centralPile.length === 51 && this.isFinals === false && this.isSlapped === false) {
               this.resetGame();
               this.centralPile = [];
               return 'It\'s a draw! Shuffle and deal again!';
@@ -114,15 +115,19 @@ class Game {
 
     slapThePile(player) {
       if (this.centralPile[0].value === 11 && this.centralPile.length > 0){
+        this.isSlapped = true;
         var message = this.slapJack(player);
         return message;
       } else if (this.centralPile.length > 1 && this.centralPile[0].value === this.centralPile[1].value && this.isFinals === false) {
+        this.isSlapped = true;
         this.clearPile(player);
         return `DOUBLES!!!!!!!! Player ${player.id} takes the pile!`;
       } else if (this.centralPile.length > 2 && this.centralPile[0].value === this.centralPile[2].value && this.isFinals === false) {
+        this.isSlapped = true;
         this.clearPile(player);
         return `SANDWICH!!!!!!!! Player ${player.id} takes the pile!`;
       } else {
+        this.isSlapped = true;
         var message = this.differentiateSlap(player);
         return message;
       }
@@ -257,6 +262,7 @@ class Game {
     resetGame() {
       this.isShuffled = false;
       this.isDealt = false;
+      this.isSlapped = false;
     }
 
 }
