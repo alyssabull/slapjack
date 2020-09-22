@@ -1,3 +1,8 @@
+.background {
+ background: -webkit-linear-gradient(to right, #757f9a, #d7dde8);
+ background: linear-gradient(to right, #757f9a, #d7dde8);
+}
+
 .title {
   display: flex;
   justify-content: center;
@@ -68,7 +73,7 @@
   width: 150px;
   border: 2px solid;
   border-radius: 8px;
-  box-shadow: 12px 12px 6px -6px green;
+  box-shadow: 12px 12px 6px -6px turquoise;
 }
 
 .player2-deck {
@@ -76,7 +81,7 @@
   width: 150px;
   border: 2px solid;
   border-radius: 8px;
-  box-shadow: 12px 12px 6px -6px cornflowerblue;
+  box-shadow: 12px 12px 6px -6px magenta;
 }
 
 .player-wins {

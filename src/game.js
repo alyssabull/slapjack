@@ -84,13 +84,11 @@ class Game {
 
     playGame(player) {
       if (this.isShuffled === false ) {
-        return 'Shuffle the deck!'
+        return 'Shuffle the deck!';
       } else if (this.isDealt === false) {
-        return 'Deal the cards!'
+        return 'Deal the cards!';
       } else if (this.isShuffled === true && this.isDealt === true) {
           if (this.centralPile.length === 52 && this.isFinals === false) {
-              // this.shuffleDeck(this.centralPile);
-              // this.beginGame();
               this.resetGame();
               this.centralPile = [];
               return 'It\'s a draw! Shuffle and deal again!';
@@ -150,8 +148,8 @@ class Game {
         this.centralPile = [];
         this.player1.hand = [];
         this.player2.hand = [];
-        // this.beginGame();
         this.resetGame();
+        debugger
         this.updateWins(player);
         return 'GAME OVER!'
       }
@@ -166,16 +164,17 @@ class Game {
         this.centralPile = [];
         this.player1.hand = [];
         this.player2.hand = [];
-        // this.beginGame();
         this.resetGame();
         if (player.id % 2 === 0) {
+          debugger
           var playerWin = this.player1;
           this.updateWins(playerWin)
+          return 'GAME OVER!!!!! Player 1 wins!'
         } else {
           var playerWin = this.player2;
           this.updateWins(playerWin);
+          return 'GAME OVER!!!!! Player 2 wins!'
         }
-        return 'GAME OVER!!!!!!!'
       }
     }
 
@@ -238,6 +237,7 @@ class Game {
     cardInventory(player) {
       if (this.jackCount) {
         this.centralPile = [];
+        this.resetGame();
         return `The game is over! Player ${player.id} won!`;
       } else if (!this.jackCount) {
         for (var i = 0; i < this.centralPile.length; i++) {
@@ -250,13 +250,8 @@ class Game {
     }
 
     updateWins(player) {
-      if (this.player1 === player) {
-        this.player1.wins++;
-        this.resetGame();
-      } else if (this.player2 === player) {
-        this.player2.wins++;
-        this.resetGame();
-      }
+      player.wins++;
+      player.saveWinsToStorage();
     }
 
     resetGame() {

@@ -9,6 +9,8 @@ var beginGameButton = document.querySelector('.begin-game-button');
 var player1WinCount = document.querySelector('.player1-win-count');
 var player2WinCount = document.querySelector('.player2-win-count');
 
+var storedWins = [];
+
 window.addEventListener('keydown', function(event) {
   if (event.key === 'q') {
     playerDeals(newGame.player1);
@@ -18,14 +20,14 @@ window.addEventListener('keydown', function(event) {
     playerSlaps(newGame.player1);
   } else if (event.key === 'j') {
     playerSlaps(newGame.player2);
-  } else if (event.key === ' ') {
-    displayWins(newGame.winCount());
   }
 });
 shuffleDeckButton.addEventListener('click', shuffleDeckMessage);
 beginGameButton.addEventListener('click', beginGameMessage);
 
 function shuffleDeckMessage() {
+  debugger
+  storedWins = [];
   newGame.shuffleDeck(newGame.cards);
   displayMessage.innerText = 'Deck has been shuffled!';
   shuffleDeckButton.classList.add('hidden');
@@ -34,6 +36,7 @@ function shuffleDeckMessage() {
 
 function beginGameMessage() {
   newGame.beginGame();
+  displayWins();
   cardDecks.classList.remove('hidden');
   player1CardCount.innerText = '26 cards';
   player2CardCount.innerText = '26 cards';
@@ -43,7 +46,8 @@ function beginGameMessage() {
 
 function playerDeals(player) {
   if (newGame.isShuffled === false) {
-    clearInputs();
+    var gameMessage = newGame.playGame(player);
+    displayMessage.innerText = gameMessage;
     player1CardCount.innerText = '';
     player2CardCount.innerText = '';
     player1WinCount.innerText = '';
@@ -58,7 +62,6 @@ function playerDeals(player) {
     }
     if (newGame.centralPile[0] === undefined) {
     } else {
-      displayWins();
       updateCardCount(player);
       var playerCard =
       `<div><img src=${newGame.centralPile[0].src} class="player${player.id}-deck"><div>`
@@ -93,6 +96,28 @@ function clearInputs() {
 }
 
 function displayWins() {
-  player1WinCount.innerText = `${newGame.player1.wins} wins`;
-  player2WinCount.innerText = `${newGame.player2.wins} wins`;
+  getWinsFromStorage();
+  var totalPlayer1Wins = 0;
+  var totalPlayer2Wins = 0;
+  for (var i = 0; i < storedWins.length; i++) {
+    if (storedWins[i].player === 'player 1') {
+      var player1Wins = storedWins[i].wins;
+      totalPlayer1Wins += player1Wins;
+    } else if (storedWins[i].player === 'player 2') {
+      var player2Wins = storedWins[i].wins;
+      totalPlayer2Wins += player2Wins;
+    }
+  }
+  player1WinCount.innerText = `${totalPlayer1Wins} wins`;
+  player2WinCount.innerText = `${totalPlayer2Wins} wins`;
+}
+
+function getWinsFromStorage() {
+  player1WinCount.classList.remove('hidden');
+  player2WinCount.classList.remove('hidden');
+  for (var i = 0; i < localStorage.length; i++) {
+    var winsInStorage = localStorage.getItem(localStorage.key(i));
+    var parsedWins = JSON.parse(winsInStorage);
+    storedWins.push(parsedWins);
+  }
 }
