@@ -54,18 +54,22 @@ function playerDeals(player) {
     cardDecks.classList.add('hidden');
     shuffleDeckButton.classList.remove('hidden');
   } else {
-    clearInputs();
-    var gameMessage = newGame.playGame(player);
-    if (gameMessage !== undefined) {
-      displayMessage.innerText = gameMessage;
-    }
-    if (newGame.centralPile[0] === undefined) {
-    } else {
-      updateCardCount(player);
-      var playerCard =
-      `<div><img src=${newGame.centralPile[0].src} class="player${player.id}-deck"><div>`
-      centralPile.insertAdjacentHTML('afterbegin', playerCard);
-    }
+    beginPlay(player);
+  }
+}
+
+function beginPlay(player) {
+  clearInputs();
+  var gameMessage = newGame.playGame(player);
+  if (gameMessage !== undefined) {
+    displayMessage.innerText = gameMessage;
+  }
+  if (newGame.centralPile[0] === undefined) {
+  } else {
+    updateCardCount(player);
+    var playerCard =
+    `<div><img src=${newGame.centralPile[0].src} class="player${player.id}-deck"><div>`;
+    centralPile.insertAdjacentHTML('afterbegin', playerCard);
   }
 }
 
@@ -81,10 +85,10 @@ function playerSlaps(player) {
 
 function updateCardCount(player) {
   if (newGame.player1 === player) {
-    var cardCount = newGame.player1.hand.length
+    var cardCount = newGame.player1.hand.length;
     player1CardCount.innerText = `${cardCount} cards`;
   } else if (newGame. player2 === player) {
-    var cardCount = newGame.player2.hand.length
+    var cardCount = newGame.player2.hand.length;
     player2CardCount.innerText = `${cardCount} cards`;
   }
 }
