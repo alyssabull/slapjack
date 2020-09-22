@@ -26,6 +26,8 @@ shuffleDeckButton.addEventListener('click', shuffleDeckMessage);
 beginGameButton.addEventListener('click', beginGameMessage);
 
 function shuffleDeckMessage() {
+  debugger
+  storedWins = [];
   newGame.shuffleDeck(newGame.cards);
   displayMessage.innerText = 'Deck has been shuffled!';
   shuffleDeckButton.classList.add('hidden');
@@ -94,7 +96,6 @@ function clearInputs() {
 }
 
 function displayWins() {
-  debugger
   getWinsFromStorage();
   var totalPlayer1Wins = 0;
   var totalPlayer2Wins = 0;
@@ -104,8 +105,7 @@ function displayWins() {
       totalPlayer1Wins += player1Wins;
     } else if (storedWins[i].player === 'player 2') {
       var player2Wins = storedWins[i].wins;
-      var numWins = storedWins[i].wins.value
-      totalPlayer2Wins += numWins;
+      totalPlayer2Wins += player2Wins;
     }
   }
   player1WinCount.innerText = `${totalPlayer1Wins} wins`;

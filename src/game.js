@@ -250,7 +250,6 @@ class Game {
     }
 
     updateWins(player) {
-      debugger
       player.wins++;
       player.saveWinsToStorage();
     }
