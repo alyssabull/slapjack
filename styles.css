@@ -1,34 +1,97 @@
-.messages {
+.title {
   display: flex;
   justify-content: center;
   margin: 20px;
+  font-size: 40px;
+  font-family: 'Monserrat', sans-serif;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+  height: 30px;
+}
+
+.button-style {
+  font-family: 'Monserrat', sans-serif;
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+  outline: none;
+  border: solid 1px;
+  width: 100px;
+  box-shadow: 3px 3px 2px -2px black;
+  cursor: pointer;
+}
+
+.messages {
+  display: flex;
+  justify-content: center;
+  height: 25px;
+  margin: 20px;
+  font-size: 20px;
+  font-family: 'Monserrat', sans-serif;
+}
+
+.player-card-count {
+  display: flex;
+  justify-content: space-around;
+  height: 25px;
+  margin-top: 25px;
+  font-family: 'Monserrat', sans-serif;
+}
+
+.player1-card-count {
+  margin-right: 32%;
 }
 
 .card-decks {
   display: flex;
   justify-content: space-around;
-  margin-top: 50px;
+  margin-top: 20px;
+}
+
+.central-pile {
+  border: black;
+  height: 215px;
+  width: 150px;
 }
 
 .player-card-deck {
   height: 215px;
   width: 150px;
-  border: 2px solid;
+  border-radius: 8px;
 }
 
-.central-pile {
+.player1-deck {
   height: 215px;
   width: 150px;
   border: 2px solid;
+  border-radius: 8px;
+  box-shadow: 12px 12px 6px -6px green;
+}
+
+.player2-deck {
+  height: 215px;
+  width: 150px;
+  border: 2px solid;
+  border-radius: 8px;
+  box-shadow: 12px 12px 6px -6px cornflowerblue;
 }
 
 .player-wins {
-  margin-left: 14%;
-  margin-right: 14%;
-  margin-top: 10px;
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-around;
+  font-family: 'Monserrat', sans-serif;
 }
 
 .player1-win-count{
   display: flex;
   justify-content: space-between;
+  margin-right: 35%;
+}
+
+.hidden {
+  display: none;
 }

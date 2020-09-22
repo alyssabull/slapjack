@@ -2,26 +2,42 @@
 <html>
   <head>
     <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap">
     <title>SlapJack</title>
   </head>
   <body>
     <main>
+      <section class="title">SlapJack</section>
+      <div class="buttons">
+        <button class="shuffle-deck-button button-style">Shuffle Deck</button>
+        <button class="begin-game-button button-style hidden">Deal Cards</button>
+      </div>
       <section class="messages">
-        <div class="display-messages">SLAPJACK! Player 1 takes the pile!</div>
+        <div class="display-message"></div>
       </section>
-      <section class="card-decks">
+      <section class="player-card-count">
+        <div class="player1-card-count"></div>
+        <div class="player2-card-count"></div>
+      </section>
+      </section>
+      <section class="card-decks hidden">
         <div class="player1-deck">
           <img src="./assets/back.png" alt="Back of Card" class="player-card-deck">
         </div>
-        <div class="central-pile"></div>
+        <div class="central-pile">
+          <img src="" alt="">
+        </div>
         <div class="player2-deck">
           <img src="./assets/back.png" alt="Back of Card" class="player-card-deck">
         </div>
       </section>
       <section class="player-wins">
-        <div class="player1-win-count">0 wins</<div>
-        <div class="player2-win-count">0 wins</div>
+        <div class="player1-win-count"></div>
+        <div class="player2-win-count"></div>
       </section>
     </main>
+      <script type="text/javascript" src="./src/player.js"></script>
+      <script type="text/javascript" src="./src/game.js"></script>
+      <script type="text/javascript" src="./src/main.js"></script>
   </body>
 </html>
