@@ -43,7 +43,8 @@ function beginGameMessage() {
 
 function playerDeals(player) {
   if (newGame.isShuffled === false) {
-    clearInputs();
+    var gameMessage = newGame.playGame(player);
+    displayMessage.innerText = gameMessage;
     player1CardCount.innerText = '';
     player2CardCount.innerText = '';
     player1WinCount.innerText = '';
@@ -93,6 +94,7 @@ function clearInputs() {
 }
 
 function displayWins() {
+  
   player1WinCount.innerText = `${newGame.player1.wins} wins`;
   player2WinCount.innerText = `${newGame.player2.wins} wins`;
 }

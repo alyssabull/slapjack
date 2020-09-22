@@ -84,13 +84,11 @@ class Game {
 
     playGame(player) {
       if (this.isShuffled === false ) {
-        return 'Shuffle the deck!'
+        return 'Shuffle the deck!';
       } else if (this.isDealt === false) {
-        return 'Deal the cards!'
+        return 'Deal the cards!';
       } else if (this.isShuffled === true && this.isDealt === true) {
           if (this.centralPile.length === 52 && this.isFinals === false) {
-              // this.shuffleDeck(this.centralPile);
-              // this.beginGame();
               this.resetGame();
               this.centralPile = [];
               return 'It\'s a draw! Shuffle and deal again!';
@@ -150,7 +148,6 @@ class Game {
         this.centralPile = [];
         this.player1.hand = [];
         this.player2.hand = [];
-        // this.beginGame();
         this.resetGame();
         this.updateWins(player);
         return 'GAME OVER!'
@@ -166,7 +163,6 @@ class Game {
         this.centralPile = [];
         this.player1.hand = [];
         this.player2.hand = [];
-        // this.beginGame();
         this.resetGame();
         if (player.id % 2 === 0) {
           var playerWin = this.player1;
@@ -252,9 +248,11 @@ class Game {
     updateWins(player) {
       if (this.player1 === player) {
         this.player1.wins++;
+        this.player1.saveWinsToStorage();
         this.resetGame();
       } else if (this.player2 === player) {
         this.player2.wins++;
+        this.player2.saveWinsToStorage();
         this.resetGame();
       }
     }
