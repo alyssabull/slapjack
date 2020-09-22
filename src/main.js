@@ -95,16 +95,29 @@ function clearInputs() {
 
 function displayWins() {
   debugger
+  getWinsFromStorage();
+  var totalPlayer1Wins = 0;
+  var totalPlayer2Wins = 0;
+  for (var i = 0; i < storedWins.length; i++) {
+    if (storedWins[i].player === 'player 1') {
+      var player1Wins = storedWins[i].wins;
+      totalPlayer1Wins += player1Wins;
+    } else if (storedWins[i].player === 'player 2') {
+      var player2Wins = storedWins[i].wins;
+      var numWins = storedWins[i].wins.value
+      totalPlayer2Wins += numWins;
+    }
+  }
+  player1WinCount.innerText = `${totalPlayer1Wins} wins`;
+  player2WinCount.innerText = `${totalPlayer2Wins} wins`;
+}
+
+function getWinsFromStorage() {
   player1WinCount.classList.remove('hidden');
   player2WinCount.classList.remove('hidden');
   for (var i = 0; i < localStorage.length; i++) {
-    var storedWins = localStorage.getItem(localStorage.key(i));
-    var parsedWins = JSON.parse(storedWins);
-    var gameID = parsedWins.id;
-    var playerName = parsedWins.player;
-    var playerWins = parsedWins.wins;
-    var playerInfo = {playerName, playerWins};
-    storedWins.push(playerInfo);
+    var winsInStorage = localStorage.getItem(localStorage.key(i));
+    var parsedWins = JSON.parse(winsInStorage);
+    storedWins.push(parsedWins);
   }
-
 }
