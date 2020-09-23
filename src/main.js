@@ -11,7 +11,12 @@ var player2WinCount = document.querySelector('.player2-win-count');
 
 var storedWins = [];
 
-window.addEventListener('keydown', function(event) {
+window.addEventListener('keydown', makeMove);
+
+shuffleDeckButton.addEventListener('click', shuffleDeckMessage);
+beginGameButton.addEventListener('click', beginGameMessage);
+
+function makeMove(event) {
   if (event.key === 'q') {
     playerDeals(newGame.player1);
   } else if (event.key === 'p') {
@@ -21,9 +26,7 @@ window.addEventListener('keydown', function(event) {
   } else if (event.key === 'j') {
     playerSlaps(newGame.player2);
   }
-});
-shuffleDeckButton.addEventListener('click', shuffleDeckMessage);
-beginGameButton.addEventListener('click', beginGameMessage);
+}
 
 function shuffleDeckMessage() {
   storedWins = [];
