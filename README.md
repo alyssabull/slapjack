@@ -5,6 +5,7 @@
 In this project, I built an application that allows two users to play a game of SlapJack. Start the game by shuffling and dealing the deck before enjoying fast-paced, edge of your seat fun! Each player has an assigned key to 'deal' and to 'slap'. First player to have all cards in their hand is declared the winner! May the best slapper win!
 
 - [Project Brief and Rubric](https://frontend.turing.io/projects/module-1/slapjack.html)
+- [Play SlapJack!](https://alyssabull.github.io/slapjack/)
 
 ## Learning Goals
 
